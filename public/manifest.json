@@ -1,0 +1,24 @@
+{
+  "name": "Social Valley",
+  "description": "Validates the reliability of social account",
+  "version": "1.0",
+  "manifest_version": 3,
+  "action": {
+    "default_popup": "index.html",
+    "default_title": "Social Valley",
+    "default_icon": "calulator_icon.png"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://www.naver.com/*"],
+      "js": ["content.js"]
+    }
+  ],
+  "permissions": ["storage", "activeTab", "scripting"],
+  "icons": {
+    "16": "calulator_icon.png",
+    "32": "calulator_icon.png",
+    "48": "calulator_icon.png",
+    "128": "calulator_icon.png"
+  }
+}
