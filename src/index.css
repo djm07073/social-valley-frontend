@@ -16,3 +16,38 @@ html,
 ::-webkit-scrollbar {
   display: none;
 }
+
+.hexagon {
+  position: relative;
+  width: 111px;
+  height: 63px;
+  background-color: #ffffff;
+  border-left: solid 1px #dddddd; /* 왼쪽 중간 */
+  border-right: solid 1px #dddddd; /* 오른쪽 중간 */
+  float: left;
+}
+
+.hexagon:before,
+.hexagon:after {
+  content: "";
+  position: absolute;
+  left: 15px;
+  width: 77.492px;
+  height: 77.492px;
+  -webkit-transform: scaleY(0.5774) rotate(-45deg);
+  -ms-transform: scaleY(0.5774) rotate(-45deg);
+  transform: scaleY(0.5774) rotate(-45deg);
+  background-color: inherit;
+}
+
+.hexagon:before {
+  top: -39px;
+  border-top: solid 1px #dddddd; /* 왼쪽 상단 */
+  border-right: solid 1px #dddddd; /* 오른쪽 상단 */
+}
+
+.hexagon:after {
+  bottom: -39px;
+  border-left: solid 1px #dddddd; /* 왼쪽 하단 */
+  border-bottom: solid 1px #dddddd; /* 오른쪽 하단 */
+}
