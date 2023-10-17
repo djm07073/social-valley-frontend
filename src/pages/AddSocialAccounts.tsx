@@ -5,6 +5,7 @@ import { useState } from "react";
 export default function AddSocialAccounts() {
   const [address, setAddress] = useState("");
   const [groupId, setGroupId] = useState("");
+  const [socialType, setSocialType] = useState(0);
 
   const SubTitle = css`
     margin-top: 15px;
@@ -38,6 +39,7 @@ export default function AddSocialAccounts() {
     margin-left: 9px;
   `;
   const imgWidth = 56;
+  const imgWidthSelected = 60;
 
   return (
     <div
@@ -61,27 +63,55 @@ export default function AddSocialAccounts() {
         }}
       >
         <img
-          src={process.env.PUBLIC_URL + "/assets/lg_friend3.png"}
-          width={imgWidth}
-          alt="friend3"
-        />
-        <img
-          src={process.env.PUBLIC_URL + "/assets/lg_friendtech.png"}
-          width={imgWidth}
-          alt="friendtech"
-          css={imgMargin}
-        />
-        <img
-          src={process.env.PUBLIC_URL + "/assets/lg_masknetwork.png"}
-          width={imgWidth}
-          alt="masknetwork"
-          css={imgMargin}
-        />
-        <img
+          onClick={() => setSocialType(1)}
           src={process.env.PUBLIC_URL + "/assets/lg_posttech.png"}
-          width={imgWidth}
+          width={socialType == 1 ? imgWidthSelected : imgWidth}
           alt="posttech"
-          css={imgMargin}
+          css={{
+            border: socialType == 1 ? "3px solid #338A46" : "none",
+            padding: socialType == 1 ? 1 : 0,
+            borderRadius: 30,
+            cursor: "pointer",
+          }}
+        />
+        <img
+          onClick={() => setSocialType(2)}
+          src={process.env.PUBLIC_URL + "/assets/lg_friendtech.png"}
+          width={socialType == 2 ? imgWidthSelected : imgWidth}
+          alt="friendtech"
+          css={{
+            border: socialType == 2 ? "3px solid #338A46" : "none",
+            padding: socialType == 2 ? 1 : 0,
+            borderRadius: 30,
+            marginLeft: 9,
+            cursor: "pointer",
+          }}
+        />
+        <img
+          onClick={() => setSocialType(3)}
+          src={process.env.PUBLIC_URL + "/assets/lg_friend3.png"}
+          width={socialType == 3 ? imgWidthSelected : imgWidth}
+          alt="friend3"
+          css={{
+            border: socialType == 3 ? "3px solid #338A46" : "none",
+            padding: socialType == 3 ? 1 : 0,
+            borderRadius: 30,
+            marginLeft: 9,
+            cursor: "pointer",
+          }}
+        />
+        <img
+          onClick={() => setSocialType(4)}
+          src={process.env.PUBLIC_URL + "/assets/lg_masknetwork.png"}
+          width={socialType == 4 ? imgWidthSelected : imgWidth}
+          alt="masknetwork"
+          css={{
+            border: socialType == 4 ? "3px solid #338A46" : "none",
+            padding: socialType == 4 ? 1 : 0,
+            borderRadius: 30,
+            marginLeft: 9,
+            cursor: "pointer",
+          }}
         />
       </div>
       <div css={SubTitle}>Wallet Address</div>
