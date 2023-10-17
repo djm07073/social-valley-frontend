@@ -21,6 +21,19 @@ export default function AddSocialAccounts() {
     border-radius: 7px;
     border: 2px solid #dddddd;
   `;
+  const StyledButton = css`
+    margin-top: 25px;
+    padding: 10px 0px;
+    background-color: #338a46;
+    width: 100%;
+    height: 38px;
+    font-size: 12px;
+    font-weight: 400;
+    border-radius: 7px;
+    text-align: center;
+    color: white;
+    cursor: pointer;
+  `;
   const imgMargin = css`
     margin-left: 9px;
   `;
@@ -89,23 +102,7 @@ export default function AddSocialAccounts() {
         onChange={(e) => setGroupId(e.target.value)}
         required
       />
-      <div
-        css={{
-          marginTop: "25px",
-          padding: "10px 0px",
-          backgroundColor: "#338A46",
-          width: "100%",
-          height: 38,
-          fontSize: 12,
-          fontWeight: 400,
-          borderRadius: 7,
-          textAlign: "center",
-          color: "white",
-          cursor: "pointer",
-        }}
-      >
-        Connect
-      </div>
+      <div css={StyledButton}>Connect</div>
     </div>
   );
 }
