@@ -6,7 +6,7 @@
   "action": {
     "default_popup": "index.html",
     "default_title": "Social Valley",
-    "default_icon": "calulator_icon.png"
+    "default_icon": "valley_logo.png"
   },
   "content_scripts": [
     {
@@ -16,9 +16,9 @@
   ],
   "permissions": ["storage", "activeTab", "scripting"],
   "icons": {
-    "16": "calulator_icon.png",
-    "32": "calulator_icon.png",
-    "48": "calulator_icon.png",
-    "128": "calulator_icon.png"
+    "16": "valley_logo.png",
+    "32": "valley_logo.png",
+    "48": "valley_logo.png",
+    "128": "valley_logo.png"
   }
 }

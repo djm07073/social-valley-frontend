@@ -1,7 +1,37 @@
 /** @jsxImportSource @emotion/react */
-import { useState } from "react";
-import { css } from "@emotion/react";
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import ConnectWallet from "./pages/ConnectWallet";
+import Profile from "./pages/Profile";
+import AddSocialAccounts from "./pages/AddSocialAccounts";
+import Comment from "./pages/Comment";
+import NotFollowing from "./pages/NotFollowing";
 
 export default function App() {
-  return <div css={{ padding: "0px 20px" }}>Social Valley ⛰️</div>;
+  const router = createBrowserRouter([
+    {
+      path: "/connect-wallet",
+      element: <ConnectWallet />,
+    },
+    {
+      path: "/add-social-accounts",
+      element: <AddSocialAccounts />,
+    },
+    {
+      path: "/comment",
+      element: <Comment />,
+    },
+    {
+      path: "/not-following",
+      element: <NotFollowing />,
+    },
+    {
+      path: "*",
+      element: <Profile />,
+    },
+  ]);
+  return (
+    <div css={{ width: "300px", height: "450px" }}>
+      <RouterProvider router={router} />
+    </div>
+  );
 }
