@@ -1,9 +1,26 @@
 /** @jsxImportSource @emotion/react */
+import { css } from "@emotion/react";
 import { useState } from "react";
 
 export default function NotFollowing() {
+  const params = new URLSearchParams(window.location.search);
+  const id = params.get("groupId");
+
   const [groupId, setGroupId] = useState("{Group id}");
   const [vely, setVely] = useState(0);
+
+  const StyledButtonHexagon = css`
+    margin-top: 10px;
+    width: 236px;
+    height: 42px;
+    text-align: center;
+    padding: 10px 0px;
+    background-color: #338a46;
+    font-size: 14px;
+    color: white;
+    cursor: pointer;
+    font-weight: 300;
+  `;
 
   return (
     <div
@@ -34,38 +51,11 @@ export default function NotFollowing() {
       >
         {vely} vely
       </div>
-      <div
-        css={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          marginBottom: 14,
-        }}
-      >
-        <img
-          src={process.env.PUBLIC_URL + "/assets/lg_web3_storage.png"}
-          width={14}
-          alt="web3_storage"
-        />
-        <div css={{ marginLeft: 6, fontSize: 12, fontWeight: 300 }}>
-          Web3 storage
-        </div>
-      </div>
-      <div
-        css={{
-          width: 236,
-          height: 42,
-          textAlign: "center",
-          padding: "10px 0px",
-          backgroundColor: "#338A46",
-          fontSize: 14,
-          color: "white",
-          cursor: "pointer",
-          fontWeight: 300,
-        }}
-      >
+      <div css={{ fontSize: 12, fontWeight: 300, marginBottom: 2 }}>
         Check this user
       </div>
+      <div css={StyledButtonHexagon}>Web3 storage</div>
+      <div css={StyledButtonHexagon}>Mask network</div>
     </div>
   );
 }

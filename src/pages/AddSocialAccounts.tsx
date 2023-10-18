@@ -3,9 +3,10 @@ import { css } from "@emotion/react";
 import { useState } from "react";
 
 export default function AddSocialAccounts() {
-  const [address, setAddress] = useState("");
+  const [address, setAddress] = useState("asdadss");
   const [groupId, setGroupId] = useState("");
   const [socialType, setSocialType] = useState(0);
+  const [walletConnected, setWalletConnected] = useState(false);
 
   const SubTitle = css`
     margin-top: 15px;
@@ -44,13 +45,17 @@ export default function AddSocialAccounts() {
   return (
     <div
       css={{
-        padding: "19px 25px",
+        padding: "20px 25px",
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",
       }}
     >
-      <i className="fas fa-arrow-left" css={{ cursor: "pointer" }}></i>
+      <img
+        src={process.env.PUBLIC_URL + "/assets/lg_back.png"}
+        width={14}
+        css={{ cursor: "pointer" }}
+      />
       <div css={{ marginTop: 36, fontSize: 14, fontWeight: 500 }}>
         Add social accounts
       </div>
@@ -89,9 +94,9 @@ export default function AddSocialAccounts() {
         />
         <img
           onClick={() => setSocialType(3)}
-          src={process.env.PUBLIC_URL + "/assets/lg_friend3.png"}
+          src={process.env.PUBLIC_URL + "/assets/lg_starsarena.png"}
           width={socialType == 3 ? imgWidthSelected : imgWidth}
-          alt="friend3"
+          alt="starsarena"
           css={{
             border: socialType == 3 ? "3px solid #338A46" : "none",
             padding: socialType == 3 ? 1 : 0,
@@ -115,14 +120,22 @@ export default function AddSocialAccounts() {
         />
       </div>
       <div css={SubTitle}>Wallet Address</div>
-      <input
-        css={StyledInput}
-        type="text"
-        placeholder="Write your wallet address"
-        value={address}
-        onChange={(e) => setAddress(e.target.value)}
-        required
-      />
+      {walletConnected ? (
+        <input
+          css={StyledInput}
+          style={{ backgroundColor: "#F2F2F2", border: "2px solid #DDDDDD" }}
+          type="text"
+          value={address}
+          // placeholder="Write your wallet address"
+          // onChange={(e) => setAddress(e.target.value)}
+          required
+          readOnly
+        />
+      ) : (
+        <div css={StyledButton} style={{ marginTop: 0 }}>
+          Social Wallet Connect
+        </div>
+      )}
       <div css={SubTitle}>Group Id</div>
       <input
         css={StyledInput}
@@ -132,7 +145,13 @@ export default function AddSocialAccounts() {
         onChange={(e) => setGroupId(e.target.value)}
         required
       />
-      <div css={StyledButton}>Connect</div>
+      {walletConnected ? (
+        <div css={StyledButton}>Connect</div>
+      ) : (
+        <div style={{ backgroundColor: "#DDDDDD" }} css={StyledButton}>
+          Connect
+        </div>
+      )}
     </div>
   );
 }

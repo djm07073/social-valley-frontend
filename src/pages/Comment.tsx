@@ -3,6 +3,9 @@ import { css } from "@emotion/react";
 import { useState } from "react";
 
 export default function Comment() {
+  const params = new URLSearchParams(window.location.search);
+  const id = params.get("groupId");
+
   const [groupId, setGroupId] = useState("{Group id}");
   const [vely, setVely] = useState(0);
   const [chooseGood, setChooseGood] = useState(false);

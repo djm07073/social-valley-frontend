@@ -1,6 +1,19 @@
 /** @jsxImportSource @emotion/react */
+import { css } from "@emotion/react";
 
 export default function ConnectWallet() {
+  const StyledButtonHexagon = css`
+    width: 236px;
+    height: 42px;
+    text-align: center;
+    padding: 10px 0px;
+    background-color: #338a46;
+    font-size: 14px;
+    color: white;
+    cursor: pointer;
+    font-weight: 300;
+  `;
+
   return (
     <div
       css={{
@@ -15,40 +28,46 @@ export default function ConnectWallet() {
         src={process.env.PUBLIC_URL + "/assets/lg_valley.png"}
         width={102}
         alt="valley"
+        css={{ marginBottom: 78, marginTop: 100 }}
+      />
+      <div css={StyledButtonHexagon}>Connect Wallet</div>
+      <div
+        css={{
+          position: "relative",
+          left: -107,
+          bottom: 43,
+          borderTop: "24px solid white",
+          borderRight: "24px solid transparent",
+        }}
+      />
+
+      <div
+        css={{
+          position: "relative",
+          right: -107,
+          bottom: 67,
+          borderTop: "24px solid white",
+          borderLeft: "24px solid transparent",
+        }}
       />
       <div
         css={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          marginTop: 45,
-          marginBottom: 14,
+          position: "relative",
+          left: -107,
+          bottom: 69,
+          borderBottom: "24px solid white",
+          borderRight: "24px solid transparent",
         }}
-      >
-        <img
-          src={process.env.PUBLIC_URL + "/assets/lg_polygon.png"}
-          width={14}
-          alt="polygon"
-        />
-        <div css={{ marginLeft: 6, fontSize: 12, fontWeight: 300 }}>
-          Polygon
-        </div>
-      </div>
+      />
       <div
         css={{
-          width: 236,
-          height: 42,
-          textAlign: "center",
-          padding: "10px 0px",
-          backgroundColor: "#338A46",
-          fontSize: 14,
-          color: "white",
-          cursor: "pointer",
-          fontWeight: 300,
+          position: "relative",
+          right: -107,
+          bottom: 93,
+          borderBottom: "24px solid white",
+          borderLeft: "24px solid transparent",
         }}
-      >
-        Connect Wallet
-      </div>
+      />
     </div>
   );
 }
