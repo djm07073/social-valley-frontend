@@ -3,6 +3,7 @@ import { css } from "@emotion/react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAccount } from "wagmi";
+import { UpdateIndex } from "../filecoin/UpdateIndex";
 
 import WalletAddress from "../components/WalletAddress";
 import InputId from "../components/InputId";
@@ -16,6 +17,28 @@ export default function AddSocialAccounts() {
   const [nextId, setNextId] = useState<string>("");
   const [socialType, setSocialType] = useState<SOCIAL_FI>("MASK");
   const [activeButton, setActiveButton] = useState<boolean>(false);
+
+  const handleAddSocial = async (
+    /** Type(int) mapping
+     * 0 = next_id
+     * 1 = post_tech
+     * 2 = friend_tech
+     * 3 = stars_arena
+     */
+    type: number,
+    social_address: string,
+    social_extra_param1: string,
+    social_extra_param2: string
+  ) => {
+    console.log("Updating Index...");
+    // await UpdateIndex(
+    //   "",
+    //   type,
+    //   social_address,
+    //   social_extra_param1,
+    //   social_extra_param2
+    // );
+  };
 
   const SubTitle = css`
     margin-top: 15px;
