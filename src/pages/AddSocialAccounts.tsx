@@ -1,9 +1,11 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function AddSocialAccounts() {
-  const [address, setAddress] = useState("asdadss");
+  const navigate = useNavigate();
+  const [address, setAddress] = useState("");
   const [groupId, setGroupId] = useState("");
   const [socialType, setSocialType] = useState(0);
   const [walletConnected, setWalletConnected] = useState(false);
@@ -52,6 +54,7 @@ export default function AddSocialAccounts() {
       }}
     >
       <img
+        onClick={() => navigate("/profile")}
         src={process.env.PUBLIC_URL + "/assets/lg_back.png"}
         width={14}
         css={{ cursor: "pointer" }}

@@ -13,6 +13,10 @@ export default function App() {
       element: <ConnectWallet />,
     },
     {
+      path: "/profile",
+      element: <Profile />,
+    },
+    {
       path: "/add-social-accounts",
       element: <AddSocialAccounts />,
     },
