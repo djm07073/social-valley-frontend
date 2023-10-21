@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Kanit:wght@200;300;400;500&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Kanit:wght@200;300;400&display=swap");
 
 body {
   margin: 0;
@@ -17,6 +17,7 @@ html,
   display: none;
 }
 
+/* -60 <= vely < -20 */
 .hexagon {
   position: relative;
   width: 111px;
@@ -50,4 +51,80 @@ html,
   bottom: -39px;
   border-left: solid 1px #dddddd; /* 왼쪽 하단 */
   border-bottom: solid 1px #dddddd; /* 오른쪽 하단 */
+}
+
+/* -20 <= vely <= 20 */
+.hexagon-green {
+  width: 114px;
+  height: 69px;
+  border-left: solid 3px #338a46; /* 왼쪽 중간 */
+  border-right: solid 3px #338a46; /* 오른쪽 중간 */
+}
+
+.hexagon-green:before,
+.hexagon-green:after {
+  left: 14px;
+  width: 76px;
+  height: 76px;
+}
+
+.hexagon-green:before {
+  top: -40px;
+  border-top: solid 4px #338a46; /* 왼쪽 상단 */
+  border-right: solid 4px #338a46; /* 오른쪽 상단 */
+}
+
+.hexagon-green:after {
+  bottom: -40px;
+  border-left: solid 4px #338a46; /* 왼쪽 하단 */
+  border-bottom: solid 4px #338a46; /* 오른쪽 하단 */
+}
+
+.hexagon-green > img {
+  top: -16px;
+}
+
+.hexagon-green + h1 {
+  color: #338a46;
+}
+
+/* 20 < vely <= 60 */
+.hexagon-aurora {
+  width: 114px;
+  height: 69px;
+  border-left: solid 3px; /* 왼쪽 중간 */
+  border-right: solid 3px; /* 오른쪽 중간 */
+  border-image: linear-gradient(90deg, #04d980 0%, #e9d11c 100%);
+  border-image-slice: 1;
+}
+
+.hexagon-aurora:before,
+.hexagon-aurora:after {
+  left: 14px;
+  width: 76px;
+  height: 76px;
+}
+
+.hexagon-aurora:before {
+  top: -40px;
+  border-top: solid 4px; /* 왼쪽 상단 */
+  border-right: solid 4px; /* 오른쪽 상단 */
+  border-image: linear-gradient(135deg, #04d980 0%, #de3e8c 50%, #e9d11c 100%);
+  border-image-slice: 1;
+}
+
+.hexagon-aurora:after {
+  bottom: -40px;
+  border-left: solid 4px; /* 왼쪽 하단 */
+  border-bottom: solid 4px; /* 오른쪽 하단 */
+  border-image: linear-gradient(135deg, #04d980 0%, #de3e8c 50%, #e9d11c 100%);
+  border-image-slice: 1;
+}
+
+.hexagon-aurora > img {
+  top: -16px;
+}
+
+.hexagon-aurora + h1 {
+  color: #ed348d;
 }

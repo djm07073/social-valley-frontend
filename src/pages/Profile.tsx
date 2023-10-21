@@ -1,7 +1,58 @@
 /** @jsxImportSource @emotion/react */
-import { useState } from "react";
+import { useEffect, useState } from "react";
+
+const selectValley = [
+  {
+    img: "/assets/img_valley_1.png",
+    className: "hexagon",
+  },
+  {
+    img: "/assets/img_valley_2.png",
+    className: "hexagon hexagon-green",
+  },
+  {
+    img: "/assets/img_valley_3.png",
+    className: "hexagon hexagon-aurora",
+  },
+];
+
+interface ISocialImg {
+  [key: string]: string;
+}
+
+const socialImg: ISocialImg = {
+  posttech: "/assets/lg_posttech.png",
+  friendtech: "/assets/lg_friendtech.png",
+  starsarena: "/assets/lg_starsarena.png",
+  masknetwork: "/assets/lg_masknetwork.png",
+};
 
 export default function Profile() {
+  // copy address
+  const address = "0x1b0BC52b647e3244e42cA4147c8622F249f6Dad9";
+
+  // hexagon
+  const [vely, setVely] = useState(21);
+  const [imgUrl, setImgUrl] = useState("");
+  const [clsName, setClsName] = useState("");
+
+  // social connect
+  const [checkSocial, setCheckSocial] = useState(true); // 1개라도 연결되어 있으면 true
+  const connectSocialArr = ["posttech", "starsarena"];
+
+  useEffect(() => {
+    if (vely < -20) {
+      setImgUrl(selectValley[0].img);
+      setClsName(selectValley[0].className);
+    } else if (vely > 20) {
+      setImgUrl(selectValley[2].img);
+      setClsName(selectValley[2].className);
+    } else {
+      setImgUrl(selectValley[1].img);
+      setClsName(selectValley[1].className);
+    }
+  }, [vely]);
+
   return (
     <div
       css={{
@@ -20,16 +71,19 @@ export default function Profile() {
           backgroundColor: "#ffffff",
         }}
       >
-        <span
+        <button
           css={{
             display: "inline-block",
             padding: "6px 12px",
             backgroundColor: "#DAE7DA",
+            border: "none",
             borderRadius: "13px",
             color: "#338A46",
+            fontFamily: "Kanit",
             fontSize: "9pt",
             cursor: "pointer",
           }}
+          onClick={() => window.navigator.clipboard.writeText(address)}
         >
           0x1b0B…Dad9
           <img
@@ -40,22 +94,21 @@ export default function Profile() {
               marginLeft: "5px",
             }}
           />
-        </span>
+        </button>
       </div>
       <div
         css={{
           display: "flex",
           flexDirection: "column",
-          // justifyContent: "center",
           alignItems: "center",
           height: "270px",
           backgroundColor: "#ffffff",
           borderRadius: "0 0 20px 20px",
         }}
       >
-        <div className="hexagon" css={{ marginTop: "70px" }}>
+        <div className={clsName} css={{ marginTop: "70px" }}>
           <img
-            src={process.env.PUBLIC_URL + "/assets/img_valley_3.png"}
+            src={process.env.PUBLIC_URL + imgUrl}
             alt="valley"
             css={{
               position: "absolute",
@@ -70,11 +123,11 @@ export default function Profile() {
         <h1
           css={{
             marginTop: "40px",
-            color: "#ED348D",
+            color: "#FF7B54",
             fontSize: "20pt",
           }}
         >
-          00 vely
+          {vely} vely
         </h1>
       </div>
       <div
@@ -93,26 +146,67 @@ export default function Profile() {
         >
           Connected social accounts
         </h4>
-        <button
-          css={{
-            padding: "6px 9px",
-            background: "none",
-            border: "1px solid #ffffff",
-            borderRadius: "20px",
-            color: "#ffffff",
-            fontSize: "10pt",
-          }}
-        >
-          <img
-            src={process.env.PUBLIC_URL + "/assets/ic_plus.png"}
-            alt="add"
-            css={{
-              width: "11px",
-              marginRight: "5px",
-            }}
-          />
-          Add
-        </button>
+        {/* 연결된 소셜 아이콘 배치 */}
+        <div css={{ display: "flex" }}>
+          {connectSocialArr.map((id) => (
+            <div
+              css={{
+                width: "27px",
+                height: "27px",
+                marginRight: "5px",
+                borderRadius: "27px",
+                overflow: "hidden",
+              }}
+            >
+              <img
+                css={{ width: "27px", height: "27px" }}
+                src={socialImg[id]}
+                alt={id}
+              />
+            </div>
+          ))}
+          <button
+            css={
+              checkSocial
+                ? {
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    width: "27px",
+                    height: "27px",
+                    background: "none",
+                    border: "1px solid #ffffff",
+                    borderRadius: "27px",
+                    cursor: "pointer",
+                  }
+                : {
+                    padding: "6px 9px",
+                    background: "none",
+                    border: "1px solid #ffffff",
+                    borderRadius: "20px",
+                    color: "#ffffff",
+                    fontSize: "10pt",
+                    cursor: "pointer",
+                  }
+            }
+          >
+            <img
+              src={process.env.PUBLIC_URL + "/assets/ic_plus.png"}
+              alt="add"
+              css={
+                checkSocial
+                  ? {
+                      width: "11px",
+                    }
+                  : {
+                      width: "11px",
+                      marginRight: "5px",
+                    }
+              }
+            />
+            {checkSocial ? null : "Add"}
+          </button>
+        </div>
       </div>
     </div>
   );
