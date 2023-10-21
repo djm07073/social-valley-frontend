@@ -74,14 +74,15 @@ export default function ConnectWallet() {
           Make Profile
         </div>
       ) : (
-        <div
-          onClick={async () => {
-            await open();
-          }}
-          css={StyledButtonHexagon}
-        >
-          Connect Wallet
-        </div>
+        // <div
+        //   onClick={async () => {
+        //     await open();
+        //   }}
+        //   css={StyledButtonHexagon}
+        // >
+        //   Connect Wallet
+        // </div>
+        <w3m-button />
       )}
 
       <div
