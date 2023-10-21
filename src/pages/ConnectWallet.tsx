@@ -68,7 +68,7 @@ export default function ConnectWallet() {
         }}
         css={StyledButtonHexagon}
       >
-        Connect Wallet
+        Make Profile
       </div>
       <div
         css={{
