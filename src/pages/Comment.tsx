@@ -2,11 +2,15 @@
 import { css } from "@emotion/react";
 import { useState } from "react";
 
-export default function Comment() {
+interface CommentProps {
+  groupId: string;
+}
+
+export default function Comment({ groupId }: CommentProps) {
   const params = new URLSearchParams(window.location.search);
   const id = params.get("groupId");
 
-  const [groupId, setGroupId] = useState("{Group id}");
+  // const [groupId, setGroupId] = useState("{Group id}");
   const [vely, setVely] = useState(0);
   const [chooseGood, setChooseGood] = useState(false);
   const [chooseBad, setChooseBad] = useState(false);

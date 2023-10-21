@@ -1,5 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import { useState, useEffect } from "react";
 import ConnectWallet from "./pages/ConnectWallet";
 import Profile from "./pages/Profile";
 import AddSocialAccounts from "./pages/AddSocialAccounts";
@@ -7,6 +8,9 @@ import Comment from "./pages/Comment";
 import NotFollowing from "./pages/NotFollowing";
 
 export default function App() {
+  // check Social Site
+  const [groupId, setGroupId] = useState("");
+
   const router = createBrowserRouter([
     {
       path: "/connect-wallet",
@@ -14,7 +18,7 @@ export default function App() {
     },
     {
       path: "/profile",
-      element: <Profile />,
+      element: <Profile setGroupId={setGroupId} />,
     },
     {
       path: "/add-social-accounts",
@@ -22,17 +26,18 @@ export default function App() {
     },
     {
       path: "/comment",
-      element: <Comment />,
+      element: <Comment groupId={groupId} />,
     },
     {
       path: "/not-following",
-      element: <NotFollowing />,
+      element: <NotFollowing groupId={groupId} />,
     },
     {
       path: "*",
-      element: <Profile />,
+      element: <Profile setGroupId={setGroupId} />,
     },
   ]);
+
   return (
     <div css={{ width: "300px", height: "450px" }}>
       <RouterProvider router={router} />

@@ -1,5 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const selectValley = [
   {
@@ -27,7 +28,13 @@ const socialImg: ISocialImg = {
   masknetwork: "/assets/lg_masknetwork.png",
 };
 
-export default function Profile() {
+interface ProfileProps {
+  setGroupId: (groupId: string) => void;
+}
+
+export default function Profile({ setGroupId }: ProfileProps) {
+  const navigate = useNavigate();
+
   // copy address
   const address = "0x1b0BC52b647e3244e42cA4147c8622F249f6Dad9";
 
@@ -52,6 +59,48 @@ export default function Profile() {
       setClsName(selectValley[1].className);
     }
   }, [vely]);
+
+  function getTabURL(callback: any) {
+    const queryInfo = {
+      active: true,
+      currentWindow: true,
+    };
+
+    chrome.tabs.query(queryInfo, function (tabs) {
+      let tab = tabs[0];
+      let url = tab.url;
+      callback(url);
+    });
+  }
+
+  function renderURL(statusText: string) {
+    if (statusText.includes("post.tech/messages/group")) {
+      setGroupId(statusText.substring(33));
+    } else if (statusText.includes("post.tech/buy-sell")) {
+      setGroupId(statusText.substring(27));
+    } else if (statusText.includes("friend.tech/rooms")) {
+      setGroupId(statusText.substring(26));
+    } else if (statusText.includes("friend.tech/rooms")) {
+      setGroupId(statusText.substring(20));
+    }
+  }
+
+  useEffect(() => {
+    getTabURL(function (url: string) {
+      renderURL(url);
+      if (
+        url.includes("https://post.tech/buy-sell/") ||
+        url.includes("https://friend.tech/")
+      ) {
+        navigate("/not-following");
+      } else if (
+        url.includes("https://post.tech/messages/") ||
+        url.includes("https://friend.tech/rooms")
+      ) {
+        navigate("/comment");
+      }
+    });
+  }, []);
 
   return (
     <div

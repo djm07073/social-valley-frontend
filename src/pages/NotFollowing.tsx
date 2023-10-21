@@ -2,11 +2,15 @@
 import { css } from "@emotion/react";
 import { useState } from "react";
 
-export default function NotFollowing() {
+interface NotFollowingProps {
+  groupId: string;
+}
+
+export default function NotFollowing({ groupId }: NotFollowingProps) {
   const params = new URLSearchParams(window.location.search);
   const id = params.get("groupId");
 
-  const [groupId, setGroupId] = useState("{Group id}");
+  // const [groupId, setGroupId] = useState("{Group id}");
   const [vely, setVely] = useState(0);
 
   const StyledButtonHexagon = css`

@@ -14,6 +14,7 @@
       "js": ["content.js"]
     }
   ],
+  "host_permissions": ["https://*/*"],
   "permissions": ["storage", "activeTab", "scripting"],
   "icons": {
     "16": "valley_logo.png",
