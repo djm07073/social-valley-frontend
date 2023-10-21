@@ -1,12 +1,12 @@
 {
   "inputs": [
     {
-      "internalType": "address",
-      "name": "account",
-      "type": "address"
+      "internalType": "string",
+      "name": "ipnsUrl",
+      "type": "string"
     }
   ],
-  "name": "addAccountByOwner",
+  "name": "addAccount",
   "outputs": [],
   "stateMutability": "nonpayable",
   "type": "function"
