@@ -1,5 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { useEffect, useState } from "react";
+import { useAccount } from "wagmi";
+import { useNavigate } from "react-router-dom";
 
 const selectValley = [
   {
@@ -28,8 +30,9 @@ const socialImg: ISocialImg = {
 };
 
 export default function Profile() {
+  const navigate = useNavigate();
   // copy address
-  const address = "0x1b0BC52b647e3244e42cA4147c8622F249f6Dad9";
+  const { address, isConnected } = useAccount();
 
   // hexagon
   const [vely, setVely] = useState(21);
@@ -41,6 +44,8 @@ export default function Profile() {
   const connectSocialArr = ["posttech", "starsarena"];
 
   useEffect(() => {
+    if (!isConnected) navigate("/connect-wallet");
+
     if (vely < -20) {
       setImgUrl(selectValley[0].img);
       setClsName(selectValley[0].className);
@@ -73,8 +78,9 @@ export default function Profile() {
       >
         <button
           css={{
-            display: "inline-block",
+            display: "flex",
             padding: "6px 12px",
+            alignItems: "center",
             backgroundColor: "#DAE7DA",
             border: "none",
             borderRadius: "13px",
@@ -83,9 +89,13 @@ export default function Profile() {
             fontSize: "9pt",
             cursor: "pointer",
           }}
-          onClick={() => window.navigator.clipboard.writeText(address)}
+          onClick={() => window.navigator.clipboard.writeText(address!)}
         >
-          0x1b0B…Dad9
+          <div
+            css={{ width: 84, textOverflow: "ellipsis", overflow: "hidden" }}
+          >
+            {address}
+          </div>
           <img
             src={process.env.PUBLIC_URL + "/assets/ic_copy.png"}
             alt="copy"
@@ -166,6 +176,7 @@ export default function Profile() {
             </div>
           ))}
           <button
+            onClick={() => navigate("/add-social-accounts")}
             css={
               checkSocial
                 ? {

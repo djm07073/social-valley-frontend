@@ -4,6 +4,7 @@ import { useAccount, useConnect } from "wagmi";
 import { InjectedConnector } from "wagmi/connectors/injected";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
+import { useWeb3Modal } from "@web3modal/wagmi/react";
 
 export default function ConnectWallet() {
   const navigate = useNavigate();
@@ -11,6 +12,7 @@ export default function ConnectWallet() {
   const { connect } = useConnect({
     connector: new InjectedConnector(),
   });
+  const { open } = useWeb3Modal();
 
   useEffect(() => {
     if (isConnected) navigate("/profile");
@@ -46,7 +48,7 @@ export default function ConnectWallet() {
       />
       <div
         onClick={async () => {
-          await connect();
+          await open();
           if (isConnected) navigate("/profile");
         }}
         css={StyledButtonHexagon}
