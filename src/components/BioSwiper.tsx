@@ -105,7 +105,7 @@ const BioSwiper = () => {
                   rel="noopener noreferrer"
                 >
                   <img
-                    src={`/assets/img_${key}.png`} // Dynamically set the image source based on the platform
+                    src={`/assets/img_${key}.png`}
                     alt={key}
                     width="24"
                     height="24"
