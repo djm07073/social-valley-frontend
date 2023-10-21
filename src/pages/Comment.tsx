@@ -1,6 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 import { useState } from "react";
+import { ParamToValley } from "../filecoin/ParamToValley";
 
 interface CommentProps {
   groupId: string;
@@ -15,6 +16,12 @@ export default function Comment({ groupId }: CommentProps) {
   const [chooseGood, setChooseGood] = useState(false);
   const [chooseBad, setChooseBad] = useState(false);
   const [comment, setComment] = useState("");
+
+  const handleSave = async () => {
+    console.log("Update Profile");
+    console.log("Get Valley Address");
+    const valleyAddress = await ParamToValley(0, groupId!);
+  };
 
   const SubTitle = css`
     margin-top: 15px;
@@ -128,7 +135,14 @@ export default function Comment({ groupId }: CommentProps) {
         onChange={(e) => setComment(e.target.value)}
         required
       />
-      <div css={StyledButton}>Save</div>
+      <div
+        css={StyledButton}
+        onClick={() => {
+          handleSave;
+        }}
+      >
+        Save
+      </div>
     </div>
   );
 }
