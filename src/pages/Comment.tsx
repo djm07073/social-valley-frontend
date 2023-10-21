@@ -26,7 +26,6 @@ export default function Comment() {
     font-weight: 400;
     border-radius: 7px;
     border: 2px solid #dddddd;
-    pla
   `;
   const StyledButton = css`
     margin-top: 25px;
