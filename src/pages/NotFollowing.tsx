@@ -14,40 +14,12 @@ export default function NotFollowing() {
   const [vely, setVely] = useState(0);
 
   const handleMaskClick = async () => {
-    // try {
-    //   const response = await axios.get('/web3bio/getNextID');
-    //   const responseData = response.data;
-  
-    //   if (responseData && responseData.next_id) {
-    //     const { next_id } = responseData;
-    //     getBioData(next_id);
-    //     console.log(next_id);
-    //   } else {
-    //     console.error('서버 응답에 유효한 데이터가 없습니다.');
-    //   }
-    // } catch (error) {
-    //   console.error('에러 발생:', error);
-    // }
     navigate('/web3bio');
   };
-      // const response = await axios.get(`https://api.web3.bio/profile/${nextId}`);
 
-  // const getBioData = async (nextId: string) => {
-  // const getBioData = async()  => {
-  //   try {
-  //     const response = await axios.get('https://api.web3.bio/profile/0x0332a5c1b5b32d42be0fc5342c26c8e538701392e4405a430d2bfb16d89f366b0d');
-  //     const bioData = response.data;
-
-  //     for (let i = 0; i < bioData.length; i++) {
-  //       console.log(bioData[i].address);
-  //       console.log(bioData[i].identity);
-  //       console.log(bioData[i].platform);
-  //       console.log(bioData[i].displayName);
-  //     }
-  //   } catch (error) {
-  //     console.error('에러 발생:', error);
-  //   }
-  // };
+  const handleStorageClick = async () => {
+    navigate('/web3storage');
+  };
 
   const StyledButtonHexagon = css`
     margin-top: 10px;
@@ -94,7 +66,7 @@ export default function NotFollowing() {
       <div css={{ fontSize: 12, fontWeight: 300, marginBottom: 2 }}>
         Check this user
       </div>
-      <div css={StyledButtonHexagon}>Web3 storage</div>
+      <div onClick={handleStorageClick}css={StyledButtonHexagon}>Web3 storage</div>
       <div onClick={handleMaskClick} css={StyledButtonHexagon}>Mask network</div>
     </div>
   );

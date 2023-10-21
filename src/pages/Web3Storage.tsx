@@ -3,22 +3,46 @@ import { css } from "@emotion/react";
 import { useState } from "react";
 
 function Web3Storage() {
-     const params = new URLSearchParams(window.location.search);
-  const id = params.get("groupId");
+    const params = new URLSearchParams(window.location.search);
+    const id = params.get("groupId");
 
-  const [groupId, setGroupId] = useState("{Group id}");
-  const [vely, setVely] = useState(0);
-  const [chooseGood, setChooseGood] = useState(false);
-  const [chooseBad, setChooseBad] = useState(false);
-  const [comment, setComment] = useState("");
+    const [groupId, setGroupId] = useState("{Group id}");
+    const [vely, setVely] = useState(0);
+    const [chooseGood, setChooseGood] = useState(false);
+    const [chooseBad, setChooseBad] = useState(false);
+    const [comment, setComment] = useState("");
 
-  const SubTitle = css`
+
+    type State = {
+        followers: string;
+        following: string;
+        buyPrice: string;
+        sellPrice: string;
+    };
+
+    type reputation = {
+        valley_address: string;
+        good_reputation: number;
+        bad_reputation: number;
+        comment: string[];
+        state: State[];
+    };
+
+    const mockReputation: reputation = {
+        valley_address: "0xf768a8FD04c16193aCd2F613b8374C1D7e521509",
+        good_reputation: 20,
+        bad_reputation: 30,
+        comment: ["이 새끼 개별로임", "나의 천사", "좋은 사람"],
+        state: [],
+    };
+
+    const SubTitle = css`
     margin-top: 15px;
     margin-bottom: 10px;
     font-size: 12px;
     font-weight: 400;
   `;
-  const StyledInput = css`
+    const StyledInput = css`
     width: 100%;
     padding: 10px 12px;
     height: 39px;
@@ -27,7 +51,7 @@ function Web3Storage() {
     border-radius: 7px;
     border: 2px solid #dddddd;
   `;
-  const StyledButton = css`
+    const StyledButton = css`
     margin-top: 25px;
     padding: 10px 0px;
     background-color: #338a46;
@@ -41,92 +65,84 @@ function Web3Storage() {
     cursor: pointer;
   `;
 
-  function chooseOpinion(value: String) {
-    if (value == "good") {
-      setChooseGood(true);
-      setChooseBad(false);
-    } else {
-      setChooseGood(false);
-      setChooseBad(true);
+    function chooseOpinion(value: String) {
+        if (value == "good") {
+            setChooseGood(true);
+            setChooseBad(false);
+        } else {
+            setChooseGood(false);
+            setChooseBad(true);
+        }
     }
-  }
 
-  return (
-    <div
-      css={{
-        padding: "37px 25px",
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-      }}
-    >
-      <div
-        css={{ display: "flex", flexDirection: "column", alignItems: "center" }}
-      >
-        <img
-          src={process.env.PUBLIC_URL + "/assets/img_valley_2.png"}
-          width={78}
-          alt="valley_2"
-          css={{ marginTop: 13, marginBottom: 15 }}
-        />
-        <div css={{ fontSize: 12, fontWeight: 400, marginBottom: 3 }}>
-          {groupId}
-        </div>
+    return (
         <div
-          css={{
-            fontSize: 18,
-            fontWeight: 500,
-            marginBottom: 10,
-            color: "#338A46",
-          }}
+            css={{
+                padding: "37px 25px",
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+            }}
         >
-          {vely} vely
+            <div
+                css={{ display: "flex", flexDirection: "column", alignItems: "center" }}
+            >
+                <img
+                    src={process.env.PUBLIC_URL + "/assets/img_valley_2.png"}
+                    width={78}
+                    alt="valley_2"
+                    css={{ marginTop: 13, marginBottom: 15 }}
+                />
+                {/* <div css={{ fontSize: 12, fontWeight: 400, marginBottom: 3 }}>
+                    {groupId}
+                </div>
+                <div
+                    css={{
+                        fontSize: 18,
+                        fontWeight: 500,
+                        marginBottom: 10,
+                        color: "#338A46",
+                    }}
+                >
+                    {vely} vely
+                </div> */}
+            </div>
+            <div
+                css={{
+                    display: "flex",
+                    flexDirection: "row",
+                    alignItems: "center",
+                    justifyContent: "center",
+                }}
+            >
+                <div>
+                    <img
+                        onClick={() => chooseOpinion("good")}
+                        src={
+                            process.env.PUBLIC_URL + "/assets/ic_good_on.png"
+                        }
+                        width={62}
+                        alt="ic_good"
+                        css={{ cursor: "pointer" }}
+                    />{mockReputation.good_reputation}</div>
+                <div>
+                    <img
+                        onClick={() => chooseOpinion("bad")}
+                        src={
+                            process.env.PUBLIC_URL + "/assets/ic_bad_on.png"
+                        }
+                        width={62}
+                        alt="ic_bad"
+                        css={{ marginLeft: 24, cursor: "pointer" }}
+                    />{mockReputation.bad_reputation}</div>
+            </div>
+            <div css={SubTitle}>Comments</div>
+            {mockReputation.comment.map((comment, index) => (
+                <div key={index}>{comment}</div>
+            ))}
+            <div css={StyledButton}>Save</div>
         </div>
-      </div>
-      <div css={SubTitle}>What is your opinion on this Group id?</div>
-      <div
-        css={{
-          display: "flex",
-          flexDirection: "row",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        <img
-          onClick={() => chooseOpinion("good")}
-          src={
-            chooseGood
-              ? process.env.PUBLIC_URL + "/assets/ic_good_on.png"
-              : process.env.PUBLIC_URL + "/assets/ic_good_off.png"
-          }
-          width={62}
-          alt="ic_good"
-          css={{ cursor: "pointer" }}
-        />
-        <img
-          onClick={() => chooseOpinion("bad")}
-          src={
-            chooseBad
-              ? process.env.PUBLIC_URL + "/assets/ic_bad_on.png"
-              : process.env.PUBLIC_URL + "/assets/ic_bad_off.png"
-          }
-          width={62}
-          alt="ic_bad"
-          css={{ marginLeft: 24, cursor: "pointer" }}
-        />
-      </div>
-      <div css={SubTitle}>Comment</div>
-      <input
-        css={StyledInput}
-        type="text"
-        placeholder="Leave your comment"
-        value={comment}
-        onChange={(e) => setComment(e.target.value)}
-        required
-      />
-      <div css={StyledButton}>Save</div>
-    </div>
-  );
+    );
 }
 
 export default Web3Storage;
