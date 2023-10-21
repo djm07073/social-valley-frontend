@@ -1,7 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 import { useAccount } from "wagmi";
-import { InjectedConnector } from "wagmi/connectors/injected";
 import { useNavigate } from "react-router-dom";
 import { useWeb3Modal } from "@web3modal/wagmi/react";
 import { IPNSCreateAndUpload } from "../filecoin/IPNSCreateAndUpload";
