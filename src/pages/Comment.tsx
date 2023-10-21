@@ -18,9 +18,22 @@ export default function Comment({ groupId }: CommentProps) {
   const [comment, setComment] = useState("");
 
   const handleSave = async () => {
-    console.log("Update Profile");
-    console.log("Get Valley Address");
-    const valleyAddress = await ParamToValley(0, groupId!);
+    console.log("Updating Profile");
+    let checkChainNum: number = 0;
+    if (checkChain == "MASK") {
+      checkChainNum = 0;
+    } else if (checkChain == "POST") {
+      checkChainNum = 1;
+    }
+    const valley_address = await ParamToValley(checkChainNum, groupId);
+    console.log("valley_address found!", valley_address);
+    console.log("Updating Profile...");
+
+    // TODO: valley_address to IPNS2 (Profile )
+    //
+    //
+    //
+    //
   };
 
   const SubTitle = css`

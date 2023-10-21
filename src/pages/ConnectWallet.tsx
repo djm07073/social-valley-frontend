@@ -18,11 +18,13 @@ export default function ConnectWallet() {
     if (chain?.id !== 8453) {
       switchNetwork?.(8453);
     }
-    const { nameBytesString, profileNameBytesString } =
-      await IPNSCreateAndUpload(address!.toString());
+    if (address) {
+      const { nameBytesString, profileNameBytesString } =
+        await IPNSCreateAndUpload(address!.toString());
 
-    setName(nameBytesString);
-    setProfile(profileNameBytesString);
+      setName(nameBytesString);
+      setProfile(profileNameBytesString);
+    }
   };
 
   // useEffect(() => {
