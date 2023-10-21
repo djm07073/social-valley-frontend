@@ -12,6 +12,11 @@ interface CommentProps {
 
 export default function Comment({ groupId, checkChain }: CommentProps) {
   const params = new URLSearchParams(window.location.search);
+  const [vely, setVely] = useState(0);
+  const [chooseGood, setChooseGood] = useState(false);
+  const [chooseBad, setChooseBad] = useState(false);
+  const [comment, setComment] = useState("");
+  const [valley_address, setValley_address] = useState("");
   const id = params.get("groupId");
   const { data: valley_reputation_data } = useContractRead({
     abi: [
@@ -39,11 +44,6 @@ export default function Comment({ groupId, checkChain }: CommentProps) {
     functionName: "getReputation",
     args: [valley_address],
   });
-  const [vely, setVely] = useState(0);
-  const [chooseGood, setChooseGood] = useState(false);
-  const [chooseBad, setChooseBad] = useState(false);
-  const [comment, setComment] = useState("");
-  const [valley_address, setValley_address] = useState("");
 
   const handleSave = async () => {
     console.log("Updating Profile");
@@ -53,10 +53,10 @@ export default function Comment({ groupId, checkChain }: CommentProps) {
     } else if (checkChain === "POST") {
       checkChainNum = 1;
     }
-    const valley_address = await ParamToValley(checkChainNum, groupId);
-    setValley_address(valley_address);
+    const _valley_address = await ParamToValley(checkChainNum, groupId);
+    setValley_address(_valley_address);
 
-    console.log("valley_address found!", valley_address);
+    console.log("valley_address found!", _valley_address);
     console.log("Updating Profile...");
 
     console.log(valley_reputation_data);
