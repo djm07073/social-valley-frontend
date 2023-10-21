@@ -1,5 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
+import * as Name from "w3name";
+import { IPNSCreateAndUpload } from "../filecoin/IPNSCreateAndUpload";
 
 export default function ConnectWallet() {
   const StyledButtonHexagon = css`
@@ -13,6 +15,8 @@ export default function ConnectWallet() {
     cursor: pointer;
     font-weight: 300;
   `;
+
+  const address = "0x123";
 
   return (
     <div
@@ -59,6 +63,8 @@ export default function ConnectWallet() {
           borderRight: "24px solid transparent",
         }}
       />
+      <button onClick={() => IPNSCreateAndUpload(address)}>IPNS_CREATE</button>
+
       <div
         css={{
           position: "relative",
