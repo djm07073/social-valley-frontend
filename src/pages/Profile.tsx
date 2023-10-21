@@ -1,7 +1,13 @@
 /** @jsxImportSource @emotion/react */
 import { useEffect, useState } from "react";
-import { useAccount } from "wagmi";
+import {
+  useAccount,
+  useContractRead,
+  useNetwork,
+  useSwitchNetwork,
+} from "wagmi";
 import { useNavigate } from "react-router-dom";
+import { CONFIG } from "../config/chainleader";
 
 const selectValley = [
   {
@@ -36,9 +42,36 @@ interface ProfileProps {
 
 export default function Profile({ setGroupId, setCheckChain }: ProfileProps) {
   const navigate = useNavigate();
-
-  // copy address
   const { address, isConnected } = useAccount();
+  const { chain } = useNetwork();
+  const { switchNetwork } = useSwitchNetwork();
+  //TODO: valley_info_data : ipns1
+  const { data: valley_info_data } = useContractRead({
+    abi: [
+      {
+        inputs: [
+          {
+            internalType: "address",
+            name: "",
+            type: "address",
+          },
+        ],
+        name: "getSocialAccountInfo",
+        outputs: [
+          {
+            internalType: "string",
+            name: "",
+            type: "string",
+          },
+        ],
+        stateMutability: "view",
+        type: "function",
+      },
+    ],
+    address: CONFIG.base.valley_profile as `0x${string}`,
+    functionName: "getSocialAccountInfo",
+    args: [address],
+  });
 
   // hexagon
   const [vely, setVely] = useState(21);
@@ -47,7 +80,7 @@ export default function Profile({ setGroupId, setCheckChain }: ProfileProps) {
 
   // social connect
   const [checkSocial, setCheckSocial] = useState(true); // 1개라도 연결되어 있으면 true
-  const connectSocialArr = ["posttech", "starsarena"];
+  const connectSocialArr = ["posttech", "starsarena"]; //TODO: mock data => ipns 쿼리로 대체
 
   useEffect(() => {
     if (!isConnected) navigate("/connect-wallet");
