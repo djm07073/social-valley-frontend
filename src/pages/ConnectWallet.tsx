@@ -1,20 +1,35 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
-import { useAccount, useConnect } from "wagmi";
+import { useAccount } from "wagmi";
 import { InjectedConnector } from "wagmi/connectors/injected";
 import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
-
+import { useWeb3Modal } from "@web3modal/wagmi/react";
+import { IPNSCreateAndUpload } from "../filecoin/IPNSCreateAndUpload";
+import useMakeProfile from "../hooks/useMakeProfile";
 export default function ConnectWallet() {
+  const { setName, setProfile, makeProfile, chain, switchNetwork } =
+    useMakeProfile();
   const navigate = useNavigate();
-  const { isConnected } = useAccount();
-  const { connect } = useConnect({
-    connector: new InjectedConnector(),
-  });
+  const { address, isConnected } = useAccount();
 
-  useEffect(() => {
-    if (isConnected) navigate("/profile");
-  }, []);
+  const { open } = useWeb3Modal();
+
+  const handleConnect = async () => {
+    if (chain?.id !== 8453) {
+      switchNetwork?.(8453);
+    }
+    const { nameBytesString, profileNameBytesString } =
+      await IPNSCreateAndUpload(address!.toString());
+
+    setName(nameBytesString);
+    setProfile(profileNameBytesString);
+
+    // To Do (BeakerJin): add ipns to smart contract mapping
+  };
+
+  // useEffect(() => {
+  //   if (isConnected) navigate("/profile");
+  // }, []);
 
   const StyledButtonHexagon = css`
     width: 236px;
@@ -46,12 +61,14 @@ export default function ConnectWallet() {
       />
       <div
         onClick={async () => {
-          await connect();
+          handleConnect();
+          makeProfile();
+          await open();
           if (isConnected) navigate("/profile");
         }}
         css={StyledButtonHexagon}
       >
-        Connect Wallet
+        Make Profile
       </div>
       <div
         css={{

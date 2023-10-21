@@ -2,13 +2,43 @@
 import { css } from "@emotion/react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useAccount } from "wagmi";
+import { UpdateIndex } from "../filecoin/UpdateIndex";
+
+import WalletAddress from "../components/WalletAddress";
+import InputId from "../components/InputId";
+
+type SOCIAL_FI = "MASK" | "FRIEND" | "STAR" | "POST";
 
 export default function AddSocialAccounts() {
   const navigate = useNavigate();
-  const [address, setAddress] = useState("");
-  const [groupId, setGroupId] = useState("");
-  const [socialType, setSocialType] = useState(0);
-  const [walletConnected, setWalletConnected] = useState(false);
+  const { address } = useAccount();
+  const [groupId, setGroupId] = useState<string>("");
+  const [nextId, setNextId] = useState<string>("");
+  const [socialType, setSocialType] = useState<SOCIAL_FI>("MASK");
+  const [activeButton, setActiveButton] = useState<boolean>(false);
+
+  const handleAddSocial = async (
+    /** Type(int) mapping
+     * 0 = next_id
+     * 1 = post_tech
+     * 2 = friend_tech
+     * 3 = stars_arena
+     */
+    type: number,
+    social_address: string,
+    social_extra_param1: string,
+    social_extra_param2: string
+  ) => {
+    console.log("Updating Index...");
+    // await UpdateIndex(
+    //   "",
+    //   type,
+    //   social_address,
+    //   social_extra_param1,
+    //   social_extra_param2
+    // );
+  };
 
   const SubTitle = css`
     margin-top: 15px;
@@ -71,84 +101,82 @@ export default function AddSocialAccounts() {
         }}
       >
         <img
-          onClick={() => setSocialType(1)}
-          src={process.env.PUBLIC_URL + "/assets/lg_posttech.png"}
-          width={socialType == 1 ? imgWidthSelected : imgWidth}
-          alt="posttech"
-          css={{
-            border: socialType == 1 ? "3px solid #338A46" : "none",
-            padding: socialType == 1 ? 1 : 0,
-            borderRadius: 30,
-            cursor: "pointer",
-          }}
-        />
-        <img
-          onClick={() => setSocialType(2)}
-          src={process.env.PUBLIC_URL + "/assets/lg_friendtech.png"}
-          width={socialType == 2 ? imgWidthSelected : imgWidth}
-          alt="friendtech"
-          css={{
-            border: socialType == 2 ? "3px solid #338A46" : "none",
-            padding: socialType == 2 ? 1 : 0,
-            borderRadius: 30,
-            marginLeft: 9,
-            cursor: "pointer",
-          }}
-        />
-        <img
-          onClick={() => setSocialType(3)}
-          src={process.env.PUBLIC_URL + "/assets/lg_starsarena.png"}
-          width={socialType == 3 ? imgWidthSelected : imgWidth}
-          alt="starsarena"
-          css={{
-            border: socialType == 3 ? "3px solid #338A46" : "none",
-            padding: socialType == 3 ? 1 : 0,
-            borderRadius: 30,
-            marginLeft: 9,
-            cursor: "pointer",
-          }}
-        />
-        <img
-          onClick={() => setSocialType(4)}
+          onClick={() => setSocialType("MASK")}
           src={process.env.PUBLIC_URL + "/assets/lg_masknetwork.png"}
-          width={socialType == 4 ? imgWidthSelected : imgWidth}
+          width={socialType == "MASK" ? imgWidthSelected : imgWidth}
           alt="masknetwork"
           css={{
-            border: socialType == 4 ? "3px solid #338A46" : "none",
-            padding: socialType == 4 ? 1 : 0,
+            border: socialType == "MASK" ? "3px solid #338A46" : "none",
+            padding: socialType == "MASK" ? 1 : 0,
+            borderRadius: 30,
+            cursor: "pointer",
+          }}
+        />
+        <img
+          onClick={() => setSocialType("POST")}
+          src={process.env.PUBLIC_URL + "/assets/lg_posttech.png"}
+          width={socialType == "POST" ? imgWidthSelected : imgWidth}
+          alt="posttech"
+          css={{
+            border: socialType == "POST" ? "3px solid #338A46" : "none",
+            padding: socialType == "POST" ? 1 : 0,
+            borderRadius: 30,
+            marginLeft: 9,
+            cursor: "pointer",
+          }}
+        />
+        <img
+          onClick={() => setSocialType("FRIEND")}
+          src={process.env.PUBLIC_URL + "/assets/lg_friendtech.png"}
+          width={socialType == "FRIEND" ? imgWidthSelected : imgWidth}
+          alt="friendtech"
+          css={{
+            border: socialType == "FRIEND" ? "3px solid #338A46" : "none",
+            padding: socialType == "FRIEND" ? 1 : 0,
+            borderRadius: 30,
+            marginLeft: 9,
+            cursor: "pointer",
+          }}
+        />
+        <img
+          onClick={() => setSocialType("STAR")}
+          src={process.env.PUBLIC_URL + "/assets/lg_starsarena.png"}
+          width={socialType == "STAR" ? imgWidthSelected : imgWidth}
+          alt="starsarena"
+          css={{
+            border: socialType == "STAR" ? "3px solid #338A46" : "none",
+            padding: socialType == "STAR" ? 1 : 0,
             borderRadius: 30,
             marginLeft: 9,
             cursor: "pointer",
           }}
         />
       </div>
-      <div css={SubTitle}>Wallet Address</div>
-      {walletConnected ? (
-        <input
-          css={StyledInput}
-          style={{ backgroundColor: "#F2F2F2", border: "2px solid #DDDDDD" }}
-          type="text"
-          value={address}
-          // placeholder="Write your wallet address"
-          // onChange={(e) => setAddress(e.target.value)}
-          required
-          readOnly
+      <WalletAddress
+        hidden={socialType == "MASK" ? true : false}
+        socialType={socialType}
+        address={address}
+        SubTitle={SubTitle}
+        StyledInput={StyledInput}
+        StyledButton={StyledButton}
+        setActiveButton={setActiveButton}
+      />
+      {socialType != "FRIEND" ? (
+        <InputId
+          socialType={socialType}
+          address={address}
+          groupId={groupId}
+          nextId={nextId}
+          setGroupId={setGroupId}
+          setNextId={setNextId}
+          SubTitle={SubTitle}
+          StyledInput={StyledInput}
+          setActiveButton={setActiveButton}
         />
       ) : (
-        <div css={StyledButton} style={{ marginTop: 0 }}>
-          Social Wallet Connect
-        </div>
+        <div />
       )}
-      <div css={SubTitle}>Group Id</div>
-      <input
-        css={StyledInput}
-        type="text"
-        placeholder="Write your social group id"
-        value={groupId}
-        onChange={(e) => setGroupId(e.target.value)}
-        required
-      />
-      {walletConnected ? (
+      {activeButton ? (
         <div css={StyledButton}>Connect</div>
       ) : (
         <div style={{ backgroundColor: "#DDDDDD" }} css={StyledButton}>
