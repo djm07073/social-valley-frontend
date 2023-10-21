@@ -2,8 +2,11 @@
 import { css } from "@emotion/react";
 import { useState } from "react";
 import axios from 'axios';
+import { useNavigate } from "react-router-dom";
+
 
 export default function NotFollowing() {
+  const navigate = useNavigate();
   const params = new URLSearchParams(window.location.search);
   const id = params.get("groupId");
 
@@ -25,25 +28,26 @@ export default function NotFollowing() {
     // } catch (error) {
     //   console.error('에러 발생:', error);
     // }
+    navigate('/web3bio');
   };
       // const response = await axios.get(`https://api.web3.bio/profile/${nextId}`);
 
   // const getBioData = async (nextId: string) => {
-  const getBioData = async()  => {
-    try {
-      const response = await axios.get('https://api.web3.bio/profile/0x0332a5c1b5b32d42be0fc5342c26c8e538701392e4405a430d2bfb16d89f366b0d');
-      const bioData = response.data;
+  // const getBioData = async()  => {
+  //   try {
+  //     const response = await axios.get('https://api.web3.bio/profile/0x0332a5c1b5b32d42be0fc5342c26c8e538701392e4405a430d2bfb16d89f366b0d');
+  //     const bioData = response.data;
 
-      for (let i = 0; i < bioData.length; i++) {
-        console.log(bioData[i].address);
-        console.log(bioData[i].identity);
-        console.log(bioData[i].platform);
-        console.log(bioData[i].displayName);
-      }
-    } catch (error) {
-      console.error('에러 발생:', error);
-    }
-  };
+  //     for (let i = 0; i < bioData.length; i++) {
+  //       console.log(bioData[i].address);
+  //       console.log(bioData[i].identity);
+  //       console.log(bioData[i].platform);
+  //       console.log(bioData[i].displayName);
+  //     }
+  //   } catch (error) {
+  //     console.error('에러 발생:', error);
+  //   }
+  // };
 
   const StyledButtonHexagon = css`
     margin-top: 10px;
@@ -91,7 +95,7 @@ export default function NotFollowing() {
         Check this user
       </div>
       <div css={StyledButtonHexagon}>Web3 storage</div>
-      <div onClick={getBioData} css={StyledButtonHexagon}>Mask network</div>
+      <div onClick={handleMaskClick} css={StyledButtonHexagon}>Mask network</div>
     </div>
   );
 }

@@ -5,9 +5,19 @@ import Profile from "./pages/Profile";
 import AddSocialAccounts from "./pages/AddSocialAccounts";
 import Comment from "./pages/Comment";
 import NotFollowing from "./pages/NotFollowing";
+import Web3Bio from "./pages/Web3Bio";
+import Web3Storage from "./pages/Web3Storage";
 
 export default function App() {
   const router = createBrowserRouter([
+    {
+      path: "/web3bio",
+      element: <Web3Bio />,
+    },
+    {
+      path: "/web3storage",
+      element: <Web3Storage />,
+    },
     {
       path: "/connect-wallet",
       element: <ConnectWallet />,
