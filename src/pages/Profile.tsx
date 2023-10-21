@@ -31,9 +31,10 @@ const socialImg: ISocialImg = {
 
 interface ProfileProps {
   setGroupId: (groupId: string) => void;
+  setCheckChain: (checkChain: string) => void;
 }
 
-export default function Profile({ setGroupId }: ProfileProps) {
+export default function Profile({ setGroupId, setCheckChain }: ProfileProps) {
   const navigate = useNavigate();
 
   // copy address
@@ -79,12 +80,16 @@ export default function Profile({ setGroupId }: ProfileProps) {
   function renderURL(statusText: string) {
     if (statusText.includes("post.tech/messages/group")) {
       setGroupId(statusText.substring(33));
+      setCheckChain("POST");
     } else if (statusText.includes("post.tech/buy-sell")) {
       setGroupId(statusText.substring(27));
+      setCheckChain("POST");
     } else if (statusText.includes("www.friend.tech/rooms")) {
       setGroupId(statusText.substring(30));
+      setCheckChain("FRIEND");
     } else if (statusText.includes("www.friend.tech/")) {
       setGroupId(statusText.substring(24));
+      setCheckChain("FRIEND");
     }
   }
 

@@ -1,24 +1,26 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 import { useState } from "react";
-import axios from 'axios';
+import axios from "axios";
 
 interface NotFollowingProps {
   groupId: string;
+  checkChain: string;
 }
 
-export default function NotFollowing({ groupId }: NotFollowingProps) {
+export default function NotFollowing({
+  groupId,
+  checkChain,
+}: NotFollowingProps) {
   const params = new URLSearchParams(window.location.search);
   const id = params.get("groupId");
 
-  // const [groupId, setGroupId] = useState("{Group id}");
   const [vely, setVely] = useState(0);
 
   const handleMaskClick = async () => {
     // try {
     //   const response = await axios.get('/web3bio/getNextID');
     //   const responseData = response.data;
-  
     //   if (responseData && responseData.next_id) {
     //     const { next_id } = responseData;
     //     getBioData(next_id);
@@ -30,12 +32,14 @@ export default function NotFollowing({ groupId }: NotFollowingProps) {
     //   console.error('에러 발생:', error);
     // }
   };
-      // const response = await axios.get(`https://api.web3.bio/profile/${nextId}`);
+  // const response = await axios.get(`https://api.web3.bio/profile/${nextId}`);
 
   // const getBioData = async (nextId: string) => {
-  const getBioData = async()  => {
+  const getBioData = async () => {
     try {
-      const response = await axios.get('https://api.web3.bio/profile/0x0332a5c1b5b32d42be0fc5342c26c8e538701392e4405a430d2bfb16d89f366b0d');
+      const response = await axios.get(
+        "https://api.web3.bio/profile/0x0332a5c1b5b32d42be0fc5342c26c8e538701392e4405a430d2bfb16d89f366b0d"
+      );
       const bioData = response.data;
 
       for (let i = 0; i < bioData.length; i++) {
@@ -45,7 +49,7 @@ export default function NotFollowing({ groupId }: NotFollowingProps) {
         console.log(bioData[i].displayName);
       }
     } catch (error) {
-      console.error('에러 발생:', error);
+      console.error("에러 발생:", error);
     }
   };
 
@@ -95,7 +99,9 @@ export default function NotFollowing({ groupId }: NotFollowingProps) {
         Check this user
       </div>
       <div css={StyledButtonHexagon}>Web3 storage</div>
-      <div onClick={getBioData} css={StyledButtonHexagon}>Mask network</div>
+      <div onClick={getBioData} css={StyledButtonHexagon}>
+        Mask network
+      </div>
     </div>
   );
 }

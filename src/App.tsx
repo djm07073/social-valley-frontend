@@ -10,6 +10,7 @@ import NotFollowing from "./pages/NotFollowing";
 export default function App() {
   // check Social Site
   const [groupId, setGroupId] = useState("");
+  const [checkChain, setCheckChain] = useState("");
 
   const router = createBrowserRouter([
     {
@@ -18,7 +19,9 @@ export default function App() {
     },
     {
       path: "/profile",
-      element: <Profile setGroupId={setGroupId} />,
+      element: (
+        <Profile setGroupId={setGroupId} setCheckChain={setCheckChain} />
+      ),
     },
     {
       path: "/add-social-accounts",
@@ -26,15 +29,17 @@ export default function App() {
     },
     {
       path: "/comment",
-      element: <Comment groupId={groupId} />,
+      element: <Comment groupId={groupId} checkChain={checkChain} />,
     },
     {
       path: "/not-following",
-      element: <NotFollowing groupId={groupId} />,
+      element: <NotFollowing groupId={groupId} checkChain={checkChain} />,
     },
     {
       path: "*",
-      element: <Profile setGroupId={setGroupId} />,
+      element: (
+        <Profile setGroupId={setGroupId} setCheckChain={setCheckChain} />
+      ),
     },
   ]);
 

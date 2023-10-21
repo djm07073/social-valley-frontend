@@ -4,13 +4,13 @@ import { useState } from "react";
 
 interface CommentProps {
   groupId: string;
+  checkChain: string;
 }
 
-export default function Comment({ groupId }: CommentProps) {
+export default function Comment({ groupId, checkChain }: CommentProps) {
   const params = new URLSearchParams(window.location.search);
   const id = params.get("groupId");
 
-  // const [groupId, setGroupId] = useState("{Group id}");
   const [vely, setVely] = useState(0);
   const [chooseGood, setChooseGood] = useState(false);
   const [chooseBad, setChooseBad] = useState(false);
