@@ -60,19 +60,19 @@ export const IPNSCreateAndUpload = async (address: string) => {
     profileNameBytesString,
   };
 
-  //   console.log("---------------------------------------");
-  //   console.log("Resolving IPNS name...");
-  //   const resolvement = (await IPNSResolve(name.toString())).value;
-  //   const resolvementProfile = (await IPNSResolve(profileName.toString())).value;
-  //   console.log("Resolved IPNS Index: ", resolvement);
-  //   console.log("Resolved IPNS Profile: ", resolvementProfile);
+  // console.log("---------------------------------------");
+  // console.log("Resolving IPNS name...");
+  // const resolvement = (await IPNSResolve(name.toString())).value;
+  // const resolvementProfile = (await IPNSResolve(profileName.toString())).value;
+  // console.log("Resolved IPNS Index: ", resolvement);
+  // console.log("Resolved IPNS Profile: ", resolvementProfile);
 
-  //   console.log("---------------------------------------");
-  //   console.log("Query IPFS file data...");
-  //   const query = await QueryIPFS(resolvement.toString());
-  //   const queryProfile = await QueryIPFS(resolvementProfile.toString());
-  //   console.log("Query IPFS Index: ", await query!.text());
-  //   console.log("Query IPFS Profile: ", await queryProfile!.text());
+  // console.log("---------------------------------------");
+  // console.log("Query IPFS file data...");
+  // const query = await QueryIPFS(resolvement.toString());
+  // const queryProfile = await QueryIPFS(resolvementProfile.toString());
+  // console.log("Query IPFS Index: ", await query!.text());
+  // console.log("Query IPFS Profile: ", await queryProfile!.text());
 
   // console.log("---------------------------------------");
   // console.log("Updating IPNS...");

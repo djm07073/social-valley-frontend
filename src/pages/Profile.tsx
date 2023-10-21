@@ -8,6 +8,7 @@ import {
 } from "wagmi";
 import { useNavigate } from "react-router-dom";
 import { CONFIG } from "../config/chainleader";
+import { ShowProfile } from "../filecoin/ShowProfile";
 
 const selectValley = [
   {
@@ -70,7 +71,7 @@ export default function Profile({ setGroupId, setCheckChain }: ProfileProps) {
     ],
     address: CONFIG.base.valley_profile as `0x${string}`,
     functionName: "getSocialAccountInfo",
-    args: [address],
+    args: [address!],
   });
 
   // hexagon
@@ -96,6 +97,16 @@ export default function Profile({ setGroupId, setCheckChain }: ProfileProps) {
       setClsName(selectValley[1].className);
     }
   }, [vely]);
+
+  const showProfile = async () => {
+    const parsedQT = await ShowProfile(valley_info_data as string);
+  };
+
+  useEffect(() => {
+    if (valley_info_data) {
+      showProfile();
+    }
+  }, [valley_info_data]);
 
   function getTabURL(callback: any) {
     const queryInfo = {
