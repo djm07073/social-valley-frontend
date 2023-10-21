@@ -81,10 +81,10 @@ export default function Profile({ setGroupId }: ProfileProps) {
       setGroupId(statusText.substring(33));
     } else if (statusText.includes("post.tech/buy-sell")) {
       setGroupId(statusText.substring(27));
-    } else if (statusText.includes("friend.tech/rooms")) {
-      setGroupId(statusText.substring(26));
-    } else if (statusText.includes("friend.tech/rooms")) {
-      setGroupId(statusText.substring(20));
+    } else if (statusText.includes("www.friend.tech/rooms")) {
+      setGroupId(statusText.substring(30));
+    } else if (statusText.includes("www.friend.tech/")) {
+      setGroupId(statusText.substring(24));
     }
   }
 
@@ -93,12 +93,12 @@ export default function Profile({ setGroupId }: ProfileProps) {
       renderURL(url);
       if (
         url.includes("https://post.tech/buy-sell/") ||
-        url.includes("https://friend.tech/")
+        url.includes("https://www.friend.tech/")
       ) {
         navigate("/not-following");
       } else if (
         url.includes("https://post.tech/messages/") ||
-        url.includes("https://friend.tech/rooms")
+        url.includes("https://www.friend.tech/rooms")
       ) {
         navigate("/comment");
       }
