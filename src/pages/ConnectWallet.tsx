@@ -20,11 +20,12 @@ export default function ConnectWallet() {
     }
     if (address) {
       const { nameBytesString, profileNameBytesString } =
-        await IPNSCreateAndUpload(address!.toString());
+        await IPNSCreateAndUpload(address);
 
       setName(nameBytesString);
       setProfile(profileNameBytesString);
     }
+    // To Do (BeakerJin): add ipns to smart contract mapping
   };
 
   // useEffect(() => {
