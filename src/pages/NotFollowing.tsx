@@ -17,7 +17,7 @@ export default function NotFollowing({
 }: NotFollowingProps) {
   const params = new URLSearchParams(window.location.search);
   const id = params.get("groupId");
-  const [valley_address, setValley_address] = useState("");
+  const [valley_address, setValley_address] = useState<`0x${string}`>("0x");
   const { data: valley_reputation_data } = useContractRead({
     abi: [
       {
@@ -66,9 +66,9 @@ export default function NotFollowing({
   const handleStorage = async () => {
     console.log("Updating Profile");
     let checkChainNum: number = 0;
-    if (checkChain == "MASK") {
+    if (checkChain === "MASK") {
       checkChainNum = 0;
-    } else if (checkChain == "POST") {
+    } else if (checkChain === "POST") {
       checkChainNum = 1;
     }
     const valley_address = await ParamToValley(checkChainNum, groupId);

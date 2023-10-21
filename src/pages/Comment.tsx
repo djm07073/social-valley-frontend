@@ -16,7 +16,7 @@ export default function Comment({ groupId, checkChain }: CommentProps) {
   const [chooseGood, setChooseGood] = useState(false);
   const [chooseBad, setChooseBad] = useState(false);
   const [comment, setComment] = useState("");
-  const [valley_address, setValley_address] = useState("");
+  const [valley_address, setValley_address] = useState<`0x${string}`>("0x");
   const id = params.get("groupId");
   const { data: valley_reputation_data } = useContractRead({
     abi: [
