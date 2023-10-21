@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAccount } from "wagmi";
 import { UpdateIndex } from "../filecoin/UpdateIndex";
+import { ethers } from "ethers";
 
 import WalletAddress from "../components/WalletAddress";
 import InputId from "../components/InputId";
@@ -177,7 +178,14 @@ export default function AddSocialAccounts() {
         <div />
       )}
       {activeButton ? (
-        <div css={StyledButton}>Connect</div>
+        <div
+          css={StyledButton}
+          onClick={() => {
+            handleAddSocial;
+          }}
+        >
+          Connect
+        </div>
       ) : (
         <div style={{ backgroundColor: "#DDDDDD" }} css={StyledButton}>
           Connect
