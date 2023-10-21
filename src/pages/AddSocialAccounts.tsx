@@ -3,7 +3,7 @@ import { css } from "@emotion/react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { UpdateIndex } from "../filecoin/UpdateIndex";
-
+import { useAccount } from "wagmi";
 export default function AddSocialAccounts() {
   const navigate = useNavigate();
   const [address, setAddress] = useState("");

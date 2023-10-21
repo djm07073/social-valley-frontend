@@ -8,13 +8,6 @@ import { loadSigningKey } from "./loadSigningKey";
  */
 
 export const ParamToValley = async (type: number, socialId: string) => {
-  //   const headIPNSPublicKey =
-  //     "k51qzi5uqu5di78bplrj60ih23z5re2nswu495z6tbmng1t9e0kkq1dw6t4q9r";
-
-  //   console.log("---------------------------------------");
-  //   const resolvement = (await IPNSResolve(headIPNSPublicKey)).value;
-  //   const query = await QueryIPFS(resolvement.toString());
-  //   console.log("Query IPFS Index: ", await query!.text());
   const headIPNSPublicKey =
     "k51qzi5uqu5di78bplrj60ih23z5re2nswu495z6tbmng1t9e0kkq1dw6t4q9r";
   console.log("---------------------------------------");
