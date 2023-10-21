@@ -5,18 +5,35 @@ import { InjectedConnector } from "wagmi/connectors/injected";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { useWeb3Modal } from "@web3modal/wagmi/react";
+import { IPNSCreateAndUpload } from "../filecoin/IPNSCreateAndUpload";
 
 export default function ConnectWallet() {
   const navigate = useNavigate();
-  const { isConnected } = useAccount();
+  const { address, isConnected } = useAccount();
+  console.log("address: ", address);
   const { connect } = useConnect({
     connector: new InjectedConnector(),
   });
   const { open } = useWeb3Modal();
 
-  useEffect(() => {
-    if (isConnected) navigate("/profile");
-  }, []);
+  const handleConnect = async () => {
+    const { nameBytesString, profileNameBytesString } =
+      await IPNSCreateAndUpload(address!.toString());
+
+    console.log("index string: ", nameBytesString);
+    console.log("profile string: ", profileNameBytesString);
+
+    // To Do (BeakerJin): add ipns to smart contract mapping
+    //
+    //
+    //
+    //
+    //
+  };
+
+  // useEffect(() => {
+  //   if (isConnected) navigate("/profile");
+  // }, []);
 
   const StyledButtonHexagon = css`
     width: 236px;
@@ -48,6 +65,7 @@ export default function ConnectWallet() {
       />
       <div
         onClick={async () => {
+          handleConnect();
           await open();
           if (isConnected) navigate("/profile");
         }}
