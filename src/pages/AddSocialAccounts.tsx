@@ -30,6 +30,13 @@ export default function AddSocialAccounts() {
     social_extra_param1: string,
     social_extra_param2: string
   ) => {
+    // TODO: (Beaker) Get IPNS using address
+    //
+    //
+    //
+    //
+    //
+
     console.log("Updating Index...");
     // await UpdateIndex(
     //   "",

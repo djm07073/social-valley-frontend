@@ -23,8 +23,6 @@ export default function ConnectWallet() {
 
     setName(nameBytesString);
     setProfile(profileNameBytesString);
-
-    // To Do (BeakerJin): add ipns to smart contract mapping
   };
 
   // useEffect(() => {
