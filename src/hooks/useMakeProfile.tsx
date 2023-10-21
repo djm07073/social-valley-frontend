@@ -30,7 +30,7 @@ export default function useMakeProfile() {
         type: "function",
       },
     ],
-    functionName: "addAccount",
+    functionName: "makeProfile",
     args: [name, profile],
   });
 
