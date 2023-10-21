@@ -1,7 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { SerializedStyles } from "@emotion/react";
 import { useAccount, useDisconnect } from "wagmi";
-import { useWeb3Modal } from "@web3modal/wagmi/react";
 import { useEffect, useState } from "react";
 
 export default function WalletAddress({
@@ -23,7 +22,7 @@ export default function WalletAddress({
 }) {
   const [preAddress, setPreAddress] = useState(address);
   const { disconnect } = useDisconnect();
-  const { open } = useWeb3Modal();
+  const { isConnected } = useAccount();
 
   useEffect(() => {
     setPreAddress(address);
@@ -42,19 +41,22 @@ export default function WalletAddress({
     <div>
       <div css={SubTitle}>Wallet Address</div>
       {preAddress != address ? (
-        <input
-          css={StyledInput}
-          style={{ backgroundColor: "#F2F2F2", border: "2px solid #DDDDDD" }}
-          type="text"
-          value={address}
-          required
-          readOnly
-        />
+        isConnected ? (
+          <input
+            css={StyledInput}
+            style={{ backgroundColor: "#F2F2F2", border: "2px solid #DDDDDD" }}
+            type="text"
+            value={address}
+            required
+            readOnly
+          />
+        ) : (
+          <w3m-button />
+        )
       ) : (
         <div
-          onClick={async () => {
-            await disconnect();
-            open();
+          onClick={() => {
+            disconnect();
           }}
           css={StyledButton}
           style={{ marginTop: 0 }}
