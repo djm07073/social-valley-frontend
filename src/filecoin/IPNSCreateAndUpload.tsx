@@ -74,19 +74,19 @@ export const IPNSCreateAndUpload = async (address: string) => {
   //   console.log("Query IPFS Index: ", await query!.text());
   //   console.log("Query IPFS Profile: ", await queryProfile!.text());
 
-  //   console.log("---------------------------------------");
-  //   console.log("Updating IPNS...");
-  //   await UpdateIndex(
-  //     name,
-  //     address,
-  //     "0x1",
-  //     "0x2",
-  //     "0x3",
-  //     "0x4",
-  //     "0x5",
-  //     "0x6",
-  //     "0x7"
-  //   );
+  // console.log("---------------------------------------");
+  // console.log("Updating IPNS...");
+  // await UpdateIndex(
+  //   name,
+  //   address,
+  //   "0x1",
+  //   "0x2",
+  //   "0x3",
+  //   "0x4",
+  //   "0x5",
+  //   "0x6",
+  //   "0x7"
+  // );
   //   await UpdateProfile(profileName, address, "1", "0", "30", "good person", "");
   //   const newResolvementIndex = (await IPNSResolve(name.toString())).value;
   //   const newResolvementProfile = (await IPNSResolve(profileName.toString()))
