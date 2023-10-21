@@ -3,6 +3,8 @@ import { css } from "@emotion/react";
 import { useState } from "react";
 import axios from "axios";
 import { ParamToValley } from "../filecoin/ParamToValley";
+import { CONFIG } from "../config/chainleader";
+import { useContractRead } from "wagmi";
 
 interface NotFollowingProps {
   groupId: string;
@@ -15,6 +17,33 @@ export default function NotFollowing({
 }: NotFollowingProps) {
   const params = new URLSearchParams(window.location.search);
   const id = params.get("groupId");
+  const [valley_address, setValley_address] = useState("");
+  const { data: valley_reputation_data } = useContractRead({
+    abi: [
+      {
+        inputs: [
+          {
+            internalType: "address",
+            name: "",
+            type: "address",
+          },
+        ],
+        name: "getReputation",
+        outputs: [
+          {
+            internalType: "string",
+            name: "",
+            type: "string",
+          },
+        ],
+        stateMutability: "view",
+        type: "function",
+      },
+    ],
+    address: CONFIG.base.valley_profile as `0x${string}`,
+    functionName: "getReputation",
+    args: [valley_address],
+  });
 
   const [vely, setVely] = useState(0);
 
@@ -46,10 +75,7 @@ export default function NotFollowing({
     console.log("valley_address found!", valley_address);
     console.log("Updating Profile...");
 
-    /**
-     * TODO: BeakerJin
-     * valley address -> IPNS2 (view function)
-     */
+    setValley_address(valley_address);
   };
 
   // const response = await axios.get(`https://api.web3.bio/profile/${nextId}`);
