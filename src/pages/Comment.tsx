@@ -2,6 +2,8 @@
 import { css } from "@emotion/react";
 import { useState } from "react";
 import { ParamToValley } from "../filecoin/ParamToValley";
+import { useContractRead } from "wagmi";
+import { CONFIG } from "../config/chainleader";
 
 interface CommentProps {
   groupId: string;
@@ -11,29 +13,53 @@ interface CommentProps {
 export default function Comment({ groupId, checkChain }: CommentProps) {
   const params = new URLSearchParams(window.location.search);
   const id = params.get("groupId");
-
+  const { data: valley_reputation_data } = useContractRead({
+    abi: [
+      {
+        inputs: [
+          {
+            internalType: "address",
+            name: "",
+            type: "address",
+          },
+        ],
+        name: "getReputation",
+        outputs: [
+          {
+            internalType: "string",
+            name: "",
+            type: "string",
+          },
+        ],
+        stateMutability: "view",
+        type: "function",
+      },
+    ],
+    address: CONFIG.base.valley_profile as `0x${string}`,
+    functionName: "getReputation",
+    args: [valley_address],
+  });
   const [vely, setVely] = useState(0);
   const [chooseGood, setChooseGood] = useState(false);
   const [chooseBad, setChooseBad] = useState(false);
   const [comment, setComment] = useState("");
+  const [valley_address, setValley_address] = useState("");
 
   const handleSave = async () => {
     console.log("Updating Profile");
     let checkChainNum: number = 0;
-    if (checkChain == "MASK") {
+    if (checkChain === "MASK") {
       checkChainNum = 0;
-    } else if (checkChain == "POST") {
+    } else if (checkChain === "POST") {
       checkChainNum = 1;
     }
     const valley_address = await ParamToValley(checkChainNum, groupId);
+    setValley_address(valley_address);
+
     console.log("valley_address found!", valley_address);
     console.log("Updating Profile...");
 
-    // TODO: valley_address to IPNS2 (Profile )
-    //
-    //
-    //
-    //
+    console.log(valley_reputation_data);
   };
 
   const SubTitle = css`
@@ -66,7 +92,7 @@ export default function Comment({ groupId, checkChain }: CommentProps) {
   `;
 
   function chooseOpinion(value: String) {
-    if (value == "good") {
+    if (value === "good") {
       setChooseGood(true);
       setChooseBad(false);
     } else {
