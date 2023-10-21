@@ -1,12 +1,12 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAccount } from "wagmi";
-import { UpdateIndex } from "../filecoin/UpdateIndex";
 
 import WalletAddress from "../components/WalletAddress";
 import InputId from "../components/InputId";
+import useGetIpns from "../hooks/useGetIPNS";
 
 type SOCIAL_FI = "MASK" | "FRIEND" | "STAR" | "POST";
 
@@ -17,7 +17,16 @@ export default function AddSocialAccounts() {
   const [nextId, setNextId] = useState<string>("");
   const [socialType, setSocialType] = useState<SOCIAL_FI>("MASK");
   const [activeButton, setActiveButton] = useState<boolean>(false);
+  const [origin, setOrigin] = useState<`0x${string}`>("0x");
+  const [rendered, setRendered] = useState<boolean>(false);
+  useEffect(() => {
+    if (address && !rendered) {
+      setOrigin(address);
+      setRendered(true);
+    }
+  }, [address, rendered]);
 
+  const { reputationIpns, accountInfoIpns } = useGetIpns(origin);
   const handleAddSocial = async (
     /** Type(int) mapping
      * 0 = next_id
@@ -25,12 +34,10 @@ export default function AddSocialAccounts() {
      * 2 = friend_tech
      * 3 = stars_arena
      */
-    type: number,
     social_address: string,
-    social_extra_param1: string,
-    social_extra_param2: string
+    social_extra_param1?: string,
+    social_extra_param2?: string
   ) => {
-    console.log("Updating Index...");
     // await UpdateIndex(
     //   "",
     //   type,
