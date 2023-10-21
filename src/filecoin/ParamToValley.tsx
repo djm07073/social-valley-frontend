@@ -38,6 +38,11 @@ export const ParamToValley = async (type: number, socialId: string) => {
           console.log("Found!");
           return parsedPrev.valley_address;
         }
+      } else if (type == 1) {
+        if (parsedPrev.post_tech_group_id == socialId) {
+          console.log("Found!");
+          return parsedPrev.valley_address;
+        }
       }
     } catch (error) {
       continue; // Continue to the next iteration

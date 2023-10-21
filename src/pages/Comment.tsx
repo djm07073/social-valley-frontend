@@ -1,6 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 import { useState } from "react";
+import { ParamToValley } from "../filecoin/ParamToValley";
 
 interface CommentProps {
   groupId: string;
@@ -15,6 +16,25 @@ export default function Comment({ groupId, checkChain }: CommentProps) {
   const [chooseGood, setChooseGood] = useState(false);
   const [chooseBad, setChooseBad] = useState(false);
   const [comment, setComment] = useState("");
+
+  const handleSave = async () => {
+    console.log("Updating Profile");
+    let checkChainNum: number = 0;
+    if (checkChain == "MASK") {
+      checkChainNum = 0;
+    } else if (checkChain == "POST") {
+      checkChainNum = 1;
+    }
+    const valley_address = await ParamToValley(checkChainNum, groupId);
+    console.log("valley_address found!", valley_address);
+    console.log("Updating Profile...");
+
+    // TODO: valley_address to IPNS2 (Profile )
+    //
+    //
+    //
+    //
+  };
 
   const SubTitle = css`
     margin-top: 15px;
