@@ -2,8 +2,8 @@
 
 ## What problem are we trying to solve?
 
-- Information asymmetry in the social-fi space
-- Proliferation of social-fi scammers and numerous bots
+- Information asymmetry in the Social-Fi space
+- Proliferation of Social-Fi scammers and numerous bots
 - Fragmentation of the social graph
 
 ## Detailed Problem Description
