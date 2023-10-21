@@ -5,10 +5,8 @@ import { QueryIPFS } from "./QueryIPFS";
 
 export const UpdateProfile = async (
   name: Name.WritableName,
-  address: string,
   plus: string,
   minus: string,
-  valley_point: string,
   comment: string,
   state: string
 ) => {
@@ -18,12 +16,22 @@ export const UpdateProfile = async (
   const latestProfile = await query!.text();
   const parsedLatest = JSON.parse(latestProfile);
   parsedLatest.comment.push(comment);
+  parsedLatest.plus = (
+    parseInt(plus, 10) + parseInt(parsedLatest.plus, 10)
+  ).toString();
+  parsedLatest.minus = (
+    parseInt(minus, 10) + parseInt(parsedLatest.minus, 10)
+  ).toString();
+  parsedLatest.state = state;
+
+  // ValleyPoint calculation logistics
+  const valleyPoint = (parseInt(parsedLatest.valley_point, 10) * 2).toString();
 
   const cid = await UploadProfile(
-    address,
-    plus,
-    minus,
-    valley_point,
+    parsedLatest.address,
+    parsedLatest.plus,
+    parsedLatest.minus,
+    valleyPoint,
     parsedLatest.comment,
     state
   );
