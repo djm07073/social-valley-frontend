@@ -1,0 +1,13 @@
+{
+  "inputs": [
+    {
+      "internalType": "address",
+      "name": "account",
+      "type": "address"
+    }
+  ],
+  "name": "addAccountByOwner",
+  "outputs": [],
+  "stateMutability": "nonpayable",
+  "type": "function"
+}

@@ -1,7 +1,21 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
+import { useAccount, useConnect } from "wagmi";
+import { InjectedConnector } from "wagmi/connectors/injected";
+import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 export default function ConnectWallet() {
+  const navigate = useNavigate();
+  const { isConnected } = useAccount();
+  const { connect } = useConnect({
+    connector: new InjectedConnector(),
+  });
+
+  useEffect(() => {
+    if (isConnected) navigate("/profile");
+  }, []);
+
   const StyledButtonHexagon = css`
     width: 236px;
     height: 42px;
@@ -30,7 +44,15 @@ export default function ConnectWallet() {
         alt="valley"
         css={{ marginBottom: 78, marginTop: 100 }}
       />
-      <div css={StyledButtonHexagon}>Connect Wallet</div>
+      <div
+        onClick={async () => {
+          await connect();
+          if (isConnected) navigate("/profile");
+        }}
+        css={StyledButtonHexagon}
+      >
+        Connect Wallet
+      </div>
       <div
         css={{
           position: "relative",
