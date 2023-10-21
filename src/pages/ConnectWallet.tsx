@@ -1,20 +1,10 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
-import {
-  useAccount,
-  useConnect,
-  useContractRead,
-  useContractWrite,
-  useNetwork,
-  useSwitchNetwork,
-} from "wagmi";
+import { useAccount } from "wagmi";
 import { InjectedConnector } from "wagmi/connectors/injected";
 import { useNavigate } from "react-router-dom";
 import { useWeb3Modal } from "@web3modal/wagmi/react";
 import { IPNSCreateAndUpload } from "../filecoin/IPNSCreateAndUpload";
-import { CONFIG } from "../config/chainleader";
-
-import { useState } from "react";
 import useMakeProfile from "../hooks/useMakeProfile";
 export default function ConnectWallet() {
   const { setName, setProfile, makeProfile, chain, switchNetwork } =
