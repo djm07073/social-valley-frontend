@@ -13,6 +13,7 @@ export default function App() {
   // check Social Site
   const [groupId, setGroupId] = useState("");
   const [checkChain, setCheckChain] = useState("");
+  const [checkSocial, setCheckSocial] = useState(false); // 1개라도 연결되어 있으면 true
 
   const router = createBrowserRouter([
     {
@@ -30,12 +31,16 @@ export default function App() {
     {
       path: "/profile",
       element: (
-        <Profile setGroupId={setGroupId} setCheckChain={setCheckChain} />
+        <Profile
+          setGroupId={setGroupId}
+          setCheckChain={setCheckChain}
+          checkSocial={checkSocial}
+        />
       ),
     },
     {
       path: "/add-social-accounts",
-      element: <AddSocialAccounts />,
+      element: <AddSocialAccounts setCheckSocial={setCheckSocial} />,
     },
     {
       path: "/comment",
@@ -48,7 +53,11 @@ export default function App() {
     {
       path: "*",
       element: (
-        <Profile setGroupId={setGroupId} setCheckChain={setCheckChain} />
+        <Profile
+          setGroupId={setGroupId}
+          setCheckChain={setCheckChain}
+          checkSocial={checkSocial}
+        />
       ),
     },
   ]);

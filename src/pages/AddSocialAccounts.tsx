@@ -9,7 +9,13 @@ import useConnect from "../hooks/useConnect";
 
 type SOCIAL_FI = "MASK" | "FRIEND" | "STAR" | "POST";
 
-export default function AddSocialAccounts() {
+interface AddSocialAccountsProps {
+  setCheckSocial: (checkSocial: boolean) => void;
+}
+
+export default function AddSocialAccounts({
+  setCheckSocial,
+}: AddSocialAccountsProps) {
   const navigate = useNavigate();
   const { base_addAccount, arbitrum_addAccount } = useConnect();
   const { address } = useAccount();
@@ -22,33 +28,35 @@ export default function AddSocialAccounts() {
   const [socialType, setSocialType] = useState<SOCIAL_FI>("MASK");
   const [activeButton, setActiveButton] = useState<boolean>(false);
 
-  const addSocial = async (
-    /** Type(int) mapping
-     * 0 = next_id
-     * 1 = post_tech
-     * 2 = friend_tech
-     * 3 = stars_arena
-     */
-    type: SOCIAL_FI,
-    social_address: string,
-    social_extra_param1?: string,
-    social_extra_param2?: string
-  ) => {
-    console.log("Updating Index...");
-    // await UpdateIndex(
-    //   "",
-    //   type,
-    //   social_address,
-    //   social_extra_param1,
-    //   social_extra_param2
-    // );
-  };
+  // const addSocial = async (
+  //   /** Type(int) mapping
+  //    * 0 = next_id
+  //    * 1 = post_tech
+  //    * 2 = friend_tech
+  //    * 3 = stars_arena
+  //    */
+  //   type: SOCIAL_FI,
+  //   social_address: string,
+  //   social_extra_param1?: string,
+  //   social_extra_param2?: string
+  // ) => {
+  //   console.log("Updating Index...");
+  //   // await UpdateIndex(
+  //   //   "",
+  //   //   type,
+  //   //   social_address,
+  //   //   social_extra_param1,
+  //   //   social_extra_param2
+  //   // );
+  // };
+
   useEffect(() => {
     if (address && !isOrigin) {
       setOrigin(address);
       setIsOrigin(true);
     }
   }, [address]);
+
   const handleConnect = async () => {
     if (socialType === "FRIEND" && chain?.id !== 8453) {
       switchNetwork?.(8453);
@@ -70,6 +78,7 @@ export default function AddSocialAccounts() {
     font-size: 12px;
     font-weight: 400;
   `;
+
   const StyledInput = css`
     width: 100%;
     padding: 10px 12px;
@@ -79,6 +88,7 @@ export default function AddSocialAccounts() {
     border-radius: 7px;
     border: 2px solid #dddddd;
   `;
+
   const StyledButton = css`
     margin-top: 25px;
     padding: 10px 0px;
@@ -92,11 +102,18 @@ export default function AddSocialAccounts() {
     color: white;
     cursor: pointer;
   `;
+
   const imgMargin = css`
     margin-left: 9px;
   `;
+
   const imgWidth = 56;
   const imgWidthSelected = 60;
+
+  const addSocial = () => {
+    setCheckSocial(true);
+    navigate("/profile");
+  };
 
   return (
     <div
@@ -108,7 +125,7 @@ export default function AddSocialAccounts() {
       }}
     >
       <img
-        onClick={() => navigate("/profile")}
+        onClick={addSocial}
         src={process.env.PUBLIC_URL + "/assets/lg_back.png"}
         width={14}
         css={{ cursor: "pointer" }}

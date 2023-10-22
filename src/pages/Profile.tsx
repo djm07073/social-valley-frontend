@@ -36,6 +36,7 @@ const socialImg: ISocialImg = {
   starsarena: "/assets/lg_starsarena.png",
   masknetwork: "/assets/lg_masknetwork.png",
 };
+
 const provider = new JsonRpcProvider("https://base.llamarpc.com");
 const profile = new Contract(
   CONFIG.base.valley_profile,
@@ -62,11 +63,18 @@ const profile = new Contract(
   ],
   provider
 );
+
 interface ProfileProps {
   setGroupId: (groupId: string) => void;
   setCheckChain: (checkChain: string) => void;
+  checkSocial: boolean;
 }
-export default function Profile({ setGroupId, setCheckChain }: ProfileProps) {
+
+export default function Profile({
+  setGroupId,
+  setCheckChain,
+  checkSocial,
+}: ProfileProps) {
   const navigate = useNavigate();
   const { address, isConnected } = useAccount();
   const { chain } = useNetwork();
@@ -105,8 +113,7 @@ export default function Profile({ setGroupId, setCheckChain }: ProfileProps) {
   const [clsName, setClsName] = useState("");
 
   // social connect
-  const [checkSocial, setCheckSocial] = useState(true); // 1개라도 연결되어 있으면 true
-  const connectSocialArr = ["posttech", "starsarena"]; //TODO: mock data => ipns 쿼리로 대체
+  const connectSocialArr = ["masknetwork", "friendtech"]; //TODO: mock data => ipns 쿼리로 대체
 
   useEffect(() => {
     if (!isConnected) navigate("/connect-wallet");
@@ -279,23 +286,25 @@ export default function Profile({ setGroupId, setCheckChain }: ProfileProps) {
         </h4>
         {/* 연결된 소셜 아이콘 배치 */}
         <div css={{ display: "flex" }}>
-          {connectSocialArr.map((id) => (
-            <div
-              css={{
-                width: "27px",
-                height: "27px",
-                marginRight: "5px",
-                borderRadius: "27px",
-                overflow: "hidden",
-              }}
-            >
-              <img
-                css={{ width: "27px", height: "27px" }}
-                src={socialImg[id]}
-                alt={id}
-              />
-            </div>
-          ))}
+          {checkSocial
+            ? connectSocialArr.map((id) => (
+                <div
+                  css={{
+                    width: "27px",
+                    height: "27px",
+                    marginRight: "5px",
+                    borderRadius: "27px",
+                    overflow: "hidden",
+                  }}
+                >
+                  <img
+                    css={{ width: "27px", height: "27px" }}
+                    src={socialImg[id]}
+                    alt={id}
+                  />
+                </div>
+              ))
+            : ""}
           <button
             onClick={() => navigate("/add-social-accounts")}
             css={

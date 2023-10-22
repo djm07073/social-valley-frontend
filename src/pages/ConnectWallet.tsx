@@ -5,7 +5,6 @@ import { useNavigate } from "react-router-dom";
 import { IPNSCreateAndUpload } from "../filecoin/IPNSCreateAndUpload";
 import useMakeProfile from "../hooks/useMakeProfile";
 import { useEffect, useState } from "react";
-import { N } from "ethers";
 export default function ConnectWallet() {
   const [name, setName] = useState<string>("");
   const [profile, setProfile] = useState<string>("");
@@ -68,7 +67,7 @@ export default function ConnectWallet() {
               console.log("transaction");
               console.log(name);
               console.log(profile);
-              makeProfile({ args: [name, profile] });
+              // makeProfile({ args: [name, profile] });
               if (isConnected && isMakeProfile) navigate("/profile");
             }}
             css={StyledButtonHexagon}
