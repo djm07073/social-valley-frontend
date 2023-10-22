@@ -1,16 +1,66 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 import { useState } from "react";
+import { ParamToValley } from "../filecoin/ParamToValley";
+import { useContractRead } from "wagmi";
+import { CONFIG } from "../config/chainleader";
 
-export default function Comment() {
+interface CommentProps {
+  groupId: string;
+  checkChain: string;
+}
+
+export default function Comment({ groupId, checkChain }: CommentProps) {
   const params = new URLSearchParams(window.location.search);
-  const id = params.get("groupId");
-
-  const [groupId, setGroupId] = useState("{Group id}");
   const [vely, setVely] = useState(0);
   const [chooseGood, setChooseGood] = useState(false);
   const [chooseBad, setChooseBad] = useState(false);
   const [comment, setComment] = useState("");
+  const [valley_address, setValley_address] = useState<`0x${string}`>("0x");
+  const id = params.get("groupId");
+  const { data: valley_reputation_data } = useContractRead({
+    abi: [
+      {
+        inputs: [
+          {
+            internalType: "address",
+            name: "",
+            type: "address",
+          },
+        ],
+        name: "getReputation",
+        outputs: [
+          {
+            internalType: "string",
+            name: "",
+            type: "string",
+          },
+        ],
+        stateMutability: "view",
+        type: "function",
+      },
+    ],
+    address: CONFIG.base.valley_profile as `0x${string}`,
+    functionName: "getReputation",
+    args: [valley_address],
+  });
+
+  const handleSave = async () => {
+    console.log("Updating Profile");
+    let checkChainNum: number = 0;
+    if (checkChain === "MASK") {
+      checkChainNum = 0;
+    } else if (checkChain === "POST") {
+      checkChainNum = 1;
+    }
+    const _valley_address = await ParamToValley(checkChainNum, groupId);
+    setValley_address(_valley_address);
+
+    console.log("valley_address found!", _valley_address);
+    console.log("Updating Profile...");
+
+    console.log(valley_reputation_data);
+  };
 
   const SubTitle = css`
     margin-top: 15px;
@@ -42,7 +92,7 @@ export default function Comment() {
   `;
 
   function chooseOpinion(value: String) {
-    if (value == "good") {
+    if (value === "good") {
       setChooseGood(true);
       setChooseBad(false);
     } else {

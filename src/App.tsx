@@ -1,5 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import { useState, useEffect } from "react";
 import ConnectWallet from "./pages/ConnectWallet";
 import Profile from "./pages/Profile";
 import AddSocialAccounts from "./pages/AddSocialAccounts";
@@ -9,6 +10,10 @@ import Web3Bio from "./pages/Web3Bio";
 import Web3Storage from "./pages/Web3Storage";
 
 export default function App() {
+  // check Social Site
+  const [groupId, setGroupId] = useState("");
+  const [checkChain, setCheckChain] = useState("");
+
   const router = createBrowserRouter([
     {
       path: "/web3bio",
@@ -24,7 +29,9 @@ export default function App() {
     },
     {
       path: "/profile",
-      element: <Profile />,
+      element: (
+        <Profile setGroupId={setGroupId} setCheckChain={setCheckChain} />
+      ),
     },
     {
       path: "/add-social-accounts",
@@ -32,17 +39,20 @@ export default function App() {
     },
     {
       path: "/comment",
-      element: <Comment />,
+      element: <Comment groupId={groupId} checkChain={checkChain} />,
     },
     {
       path: "/not-following",
-      element: <NotFollowing />,
+      element: <NotFollowing groupId={groupId} checkChain={checkChain} />,
     },
     {
       path: "*",
-      element: <Profile />,
+      element: (
+        <Profile setGroupId={setGroupId} setCheckChain={setCheckChain} />
+      ),
     },
   ]);
+
   return (
     <div css={{ width: "300px", height: "450px" }}>
       <RouterProvider router={router} />

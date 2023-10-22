@@ -1,7 +1,14 @@
 /** @jsxImportSource @emotion/react */
 import { useEffect, useState } from "react";
-import { useAccount } from "wagmi";
+import {
+  useAccount,
+  useContractRead,
+  useNetwork,
+  useSwitchNetwork,
+} from "wagmi";
 import { useNavigate } from "react-router-dom";
+import { CONFIG } from "../config/chainleader";
+import { ShowProfile } from "../filecoin/ShowProfile";
 
 const selectValley = [
   {
@@ -29,10 +36,43 @@ const socialImg: ISocialImg = {
   masknetwork: "/assets/lg_masknetwork.png",
 };
 
-export default function Profile() {
+interface ProfileProps {
+  setGroupId: (groupId: string) => void;
+  setCheckChain: (checkChain: string) => void;
+}
+
+export default function Profile({ setGroupId, setCheckChain }: ProfileProps) {
   const navigate = useNavigate();
-  // copy address
   const { address, isConnected } = useAccount();
+  const { chain } = useNetwork();
+  const { switchNetwork } = useSwitchNetwork();
+  //TODO: valley_info_data : ipns1
+  const { data: valley_info_data } = useContractRead({
+    abi: [
+      {
+        inputs: [
+          {
+            internalType: "address",
+            name: "",
+            type: "address",
+          },
+        ],
+        name: "getSocialAccountInfo",
+        outputs: [
+          {
+            internalType: "string",
+            name: "",
+            type: "string",
+          },
+        ],
+        stateMutability: "view",
+        type: "function",
+      },
+    ],
+    address: CONFIG.base.valley_profile as `0x${string}`,
+    functionName: "getSocialAccountInfo",
+    args: [address!],
+  });
 
   // hexagon
   const [vely, setVely] = useState(21);
@@ -41,7 +81,7 @@ export default function Profile() {
 
   // social connect
   const [checkSocial, setCheckSocial] = useState(true); // 1개라도 연결되어 있으면 true
-  const connectSocialArr = ["posttech", "starsarena"];
+  const connectSocialArr = ["posttech", "starsarena"]; //TODO: mock data => ipns 쿼리로 대체
 
   useEffect(() => {
     if (!isConnected) navigate("/connect-wallet");
@@ -57,6 +97,62 @@ export default function Profile() {
       setClsName(selectValley[1].className);
     }
   }, [vely]);
+
+  const showProfile = async () => {
+    const parsedQT = await ShowProfile(valley_info_data as string);
+  };
+
+  useEffect(() => {
+    if (valley_info_data) {
+      showProfile();
+    }
+  }, [valley_info_data]);
+
+  function getTabURL(callback: any) {
+    const queryInfo = {
+      active: true,
+      currentWindow: true,
+    };
+
+    chrome.tabs.query(queryInfo, function (tabs) {
+      let tab = tabs[0];
+      let url = tab.url;
+      callback(url);
+    });
+  }
+
+  function renderURL(statusText: string) {
+    if (statusText.includes("post.tech/messages/group")) {
+      setGroupId(statusText.substring(33));
+      setCheckChain("POST");
+    } else if (statusText.includes("post.tech/buy-sell")) {
+      setGroupId(statusText.substring(27));
+      setCheckChain("POST");
+    } else if (statusText.includes("www.friend.tech/rooms")) {
+      setGroupId(statusText.substring(30));
+      setCheckChain("FRIEND");
+    } else if (statusText.includes("www.friend.tech/")) {
+      setGroupId(statusText.substring(24));
+      setCheckChain("FRIEND");
+    }
+  }
+
+  useEffect(() => {
+    getTabURL(function (url: string) {
+      renderURL(url);
+      if (
+        url.includes("https://post.tech/buy-sell/") ||
+        url.includes("https://www.friend.tech/")
+      ) {
+        navigate("/not-following");
+      } else if (
+        url.includes("https://post.tech/messages/") ||
+        url.includes("https://www.friend.tech/rooms")
+      ) {
+        navigate("/comment");
+      }
+    });
+  }, []);
 
   return (
     <div

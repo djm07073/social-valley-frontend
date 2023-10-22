@@ -1,24 +1,76 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 import { useState } from "react";
-import axios from 'axios';
+
+import axios from "axios";
+import { ParamToValley } from "../filecoin/ParamToValley";
+import { CONFIG } from "../config/chainleader";
+import { useContractRead } from "wagmi";
 import { useNavigate } from "react-router-dom";
 
+interface NotFollowingProps {
+  groupId: string;
+  checkChain: string;
+}
 
-export default function NotFollowing() {
+
+export default function NotFollowing({
+  groupId,
+  checkChain,
+}: NotFollowingProps) {
   const navigate = useNavigate();
+
   const params = new URLSearchParams(window.location.search);
   const id = params.get("groupId");
+  const [valley_address, setValley_address] = useState<`0x${string}`>("0x");
+  const { data: valley_reputation_data } = useContractRead({
+    abi: [
+      {
+        inputs: [
+          {
+            internalType: "address",
+            name: "",
+            type: "address",
+          },
+        ],
+        name: "getReputation",
+        outputs: [
+          {
+            internalType: "string",
+            name: "",
+            type: "string",
+          },
+        ],
+        stateMutability: "view",
+        type: "function",
+      },
+    ],
+    address: CONFIG.base.valley_profile as `0x${string}`,
+    functionName: "getReputation",
+    args: [valley_address],
+  });
 
-  const [groupId, setGroupId] = useState("{Group id}");
   const [vely, setVely] = useState(0);
 
   const handleMaskClick = async () => {
     navigate('/web3bio');
   };
 
-  const handleStorageClick = async () => {
-    navigate('/web3storage');
+  const handleStorage = async () => {
+    console.log("Updating Profile");
+    let checkChainNum: number = 0;
+    if (checkChain === "MASK") {
+      checkChainNum = 0;
+    } else if (checkChain === "POST") {
+      checkChainNum = 1;
+    }
+    const valley_address = await ParamToValley(checkChainNum, groupId);
+    console.log("valley_address found!", valley_address);
+    console.log("Updating Profile...");
+
+    setValley_address(valley_address);
+    
+    // navigate('/web3storage');v
   };
 
   const StyledButtonHexagon = css`

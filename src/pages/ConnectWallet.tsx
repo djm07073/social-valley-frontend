@@ -1,18 +1,33 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
-import { useAccount, useConnect } from "wagmi";
-import { InjectedConnector } from "wagmi/connectors/injected";
+import { useAccount } from "wagmi";
 import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
 import { useWeb3Modal } from "@web3modal/wagmi/react";
-
+import { IPNSCreateAndUpload } from "../filecoin/IPNSCreateAndUpload";
+import useMakeProfile from "../hooks/useMakeProfile";
+import { useEffect } from "react";
 export default function ConnectWallet() {
+  const { setName, setProfile, makeProfile, chain, switchNetwork } =
+    useMakeProfile();
   const navigate = useNavigate();
-  const { isConnected } = useAccount();
-  const { connect } = useConnect({
-    connector: new InjectedConnector(),
-  });
+  const { address, isConnected } = useAccount();
+
   const { open } = useWeb3Modal();
+
+  const handleConnect = async () => {
+    if (chain?.id !== 8453) {
+      switchNetwork?.(8453);
+    }
+    if (address) {
+      const { nameBytesString, profileNameBytesString } =
+        await IPNSCreateAndUpload(address);
+
+      setName(nameBytesString);
+      setProfile(profileNameBytesString);
+    }
+
+    // To Do (BeakerJin): add ipns to smart contract mapping
+  };
 
   useEffect(() => {
     if (isConnected) navigate("/profile");
@@ -46,15 +61,29 @@ export default function ConnectWallet() {
         alt="valley"
         css={{ marginBottom: 78, marginTop: 100 }}
       />
-      <div
-        onClick={async () => {
-          await open();
-          if (isConnected) navigate("/profile");
-        }}
-        css={StyledButtonHexagon}
-      >
-        Connect Wallet
-      </div>
+      {address ? (
+        <div
+          onClick={async () => {
+            handleConnect();
+            makeProfile();
+            if (isConnected) navigate("/profile");
+          }}
+          css={StyledButtonHexagon}
+        >
+          Make Profile
+        </div>
+      ) : (
+        // <div
+        //   onClick={async () => {
+        //     await open();
+        //   }}
+        //   css={StyledButtonHexagon}
+        // >
+        //   Connect Wallet
+        // </div>
+        <w3m-button />
+      )}
+
       <div
         css={{
           position: "relative",
