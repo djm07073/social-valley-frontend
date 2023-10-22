@@ -108,6 +108,7 @@ export default function AddSocialAccounts() {
         src={process.env.PUBLIC_URL + "/assets/lg_back.png"}
         width={14}
         css={{ cursor: "pointer" }}
+        alt=""
       />
       <div css={{ marginTop: 36, fontSize: 14, fontWeight: 500 }}>
         Add social accounts

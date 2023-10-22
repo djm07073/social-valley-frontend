@@ -1,20 +1,25 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 import { useState } from "react";
+
 import axios from "axios";
 import { ParamToValley } from "../filecoin/ParamToValley";
 import { CONFIG } from "../config/chainleader";
 import { useContractRead } from "wagmi";
+import { useNavigate } from "react-router-dom";
 
 interface NotFollowingProps {
   groupId: string;
   checkChain: string;
 }
 
+
 export default function NotFollowing({
   groupId,
   checkChain,
 }: NotFollowingProps) {
+  const navigate = useNavigate();
+
   const params = new URLSearchParams(window.location.search);
   const id = params.get("groupId");
   const [valley_address, setValley_address] = useState<`0x${string}`>("0x");
@@ -48,19 +53,7 @@ export default function NotFollowing({
   const [vely, setVely] = useState(0);
 
   const handleMaskClick = async () => {
-    // try {
-    //   const response = await axios.get('/web3bio/getNextID');
-    //   const responseData = response.data;
-    //   if (responseData && responseData.next_id) {
-    //     const { next_id } = responseData;
-    //     getBioData(next_id);
-    //     console.log(next_id);
-    //   } else {
-    //     console.error('서버 응답에 유효한 데이터가 없습니다.');
-    //   }
-    // } catch (error) {
-    //   console.error('에러 발생:', error);
-    // }
+    navigate('/web3bio');
   };
 
   const handleStorage = async () => {
@@ -76,27 +69,8 @@ export default function NotFollowing({
     console.log("Updating Profile...");
 
     setValley_address(valley_address);
-  };
-
-  // const response = await axios.get(`https://api.web3.bio/profile/${nextId}`);
-
-  // const getBioData = async (nextId: string) => {
-  const getBioData = async () => {
-    try {
-      const response = await axios.get(
-        "https://api.web3.bio/profile/0x0332a5c1b5b32d42be0fc5342c26c8e538701392e4405a430d2bfb16d89f366b0d"
-      );
-      const bioData = response.data;
-
-      for (let i = 0; i < bioData.length; i++) {
-        console.log(bioData[i].address);
-        console.log(bioData[i].identity);
-        console.log(bioData[i].platform);
-        console.log(bioData[i].displayName);
-      }
-    } catch (error) {
-      console.error("에러 발생:", error);
-    }
+    
+    // navigate('/web3storage');v
   };
 
   const StyledButtonHexagon = css`
@@ -144,10 +118,8 @@ export default function NotFollowing({
       <div css={{ fontSize: 12, fontWeight: 300, marginBottom: 2 }}>
         Check this user
       </div>
-      <div css={StyledButtonHexagon}>Web3 storage</div>
-      <div onClick={getBioData} css={StyledButtonHexagon}>
-        Mask network
-      </div>
+      <div onClick={handleStorageClick}css={StyledButtonHexagon}>Web3 storage</div>
+      <div onClick={handleMaskClick} css={StyledButtonHexagon}>Mask network</div>
     </div>
   );
 }
