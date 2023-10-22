@@ -4,17 +4,13 @@ import { useAccount } from "wagmi";
 import { useNavigate } from "react-router-dom";
 import { IPNSCreateAndUpload } from "../filecoin/IPNSCreateAndUpload";
 import useMakeProfile from "../hooks/useMakeProfile";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { N } from "ethers";
 export default function ConnectWallet() {
-  const {
-    isLoading,
-    setName,
-    setProfile,
-    makeProfile,
-    chain,
-    switchNetwork,
-    isMakeProfile,
-  } = useMakeProfile();
+  const [name, setName] = useState<string>("");
+  const [profile, setProfile] = useState<string>("");
+  const { isLoading, makeProfile, chain, switchNetwork, isMakeProfile } =
+    useMakeProfile();
   const navigate = useNavigate();
   const { address, isConnected } = useAccount();
   const handleConnect = async () => {
@@ -68,9 +64,11 @@ export default function ConnectWallet() {
         ) : (
           <div
             onClick={async () => {
-              handleConnect();
+              await handleConnect();
               console.log("transaction");
-              makeProfile();
+              console.log(name);
+              console.log(profile);
+              makeProfile({ args: [name, profile] });
               if (isConnected && isMakeProfile) navigate("/profile");
             }}
             css={StyledButtonHexagon}

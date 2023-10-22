@@ -3,8 +3,6 @@ import { CONFIG } from "../config/chainleader";
 import { useContractWrite, useNetwork, useSwitchNetwork } from "wagmi";
 
 export default function useMakeProfile() {
-  const [name, setName] = useState<string>("");
-  const [profile, setProfile] = useState<string>("");
   const { chain } = useNetwork();
   const { switchNetwork } = useSwitchNetwork();
 
@@ -35,7 +33,6 @@ export default function useMakeProfile() {
       },
     ],
     functionName: "makeProfile",
-    args: [name, profile],
   });
 
   return {
@@ -44,7 +41,5 @@ export default function useMakeProfile() {
     isLoading,
     chain,
     switchNetwork,
-    setName,
-    setProfile,
   };
 }
