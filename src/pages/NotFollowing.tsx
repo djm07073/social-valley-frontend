@@ -57,19 +57,16 @@ export default function NotFollowing({
 
   const handleStorageClick = async () => {
     console.log("Updating Profile");
-    let checkChainNum: number = 0;
-    if (checkChain === "MASK") {
-      checkChainNum = 0;
-    } else if (checkChain === "POST") {
-      checkChainNum = 1;
-    }
-    const valley_address = await ParamToValley(checkChainNum, groupId);
-    console.log("valley_address found!", valley_address);
-    console.log("Updating Profile...");
-
-    setValley_address(valley_address);
-
-    // navigate('/web3storage');
+    // let checkChainNum: number = 0;
+    // if (checkChain === "MASK") {
+    //   checkChainNum = 0;
+    // } else if (checkChain === "POST") {
+    //   checkChainNum = 1;
+    // }
+    // const valley_address = await ParamToValley(checkChainNum, groupId);
+    // console.log("valley_address found!", valley_address);
+    // console.log("Updating Profile...");
+    navigate('/web3storage');
   };
 
   const StyledButtonHexagon = css`

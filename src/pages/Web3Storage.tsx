@@ -22,17 +22,17 @@ function Web3Storage() {
 
     type reputation = {
         valley_address: string;
-        good_reputation: number;
-        bad_reputation: number;
+        good_reputation: string;
+        bad_reputation: string;
         comment: string[];
         state: State[];
     };
 
     const mockReputation: reputation = {
         valley_address: "0xf768a8FD04c16193aCd2F613b8374C1D7e521509",
-        good_reputation: 20,
-        bad_reputation: 30,
-        comment: ["나의 악마", "나의 천사", "좋은 사람"],
+        good_reputation: '12k',
+        bad_reputation: '0',
+        comment: ["I love you SujiYan 😍", "Mask is SO COOL SO AWESOME!!", "Better Than Friend.Tech 😎"],
         state: [],
     };
 
