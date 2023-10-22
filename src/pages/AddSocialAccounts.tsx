@@ -10,6 +10,8 @@ import WalletAddress from "../components/WalletAddress";
 import InputId from "../components/InputId";
 import useConnect from "../hooks/useConnect";
 import { base } from "viem/chains";
+import { ValleyIndex } from "../components/ValleyIndex";
+import { ValleyProfile } from "../components/ValleyProfile";
 
 type SOCIAL_FI = "MASK" | "FRIEND" | "STAR" | "POST";
 
@@ -37,6 +39,7 @@ export default function AddSocialAccounts() {
     social_extra_param2?: string
   ) => {
     console.log("Updating Index...");
+    // const IPNS1 = await ValleyIndex.getReputation(address!);
     // await UpdateIndex(
     //   "",
     //   type,

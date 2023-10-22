@@ -9,6 +9,8 @@ import {
 import { useNavigate } from "react-router-dom";
 import { CONFIG } from "../config/chainleader";
 import { ShowProfile } from "../filecoin/ShowProfile";
+import { Contract, JsonRpcProvider, ethers } from "ethers";
+import { ValleyProfile } from "../components/ValleyProfile";
 
 const selectValley = [
   {
@@ -46,33 +48,58 @@ export default function Profile({ setGroupId, setCheckChain }: ProfileProps) {
   const { address, isConnected } = useAccount();
   const { chain } = useNetwork();
   const { switchNetwork } = useSwitchNetwork();
+  const [valley_info_data, set_valley_info_data] = useState<string>("");
   //TODO: valley_info_data : ipns1
-  const { data: valley_info_data } = useContractRead({
-    abi: [
-      {
-        inputs: [
-          {
-            internalType: "address",
-            name: "",
-            type: "address",
-          },
-        ],
-        name: "getSocialAccountInfo",
-        outputs: [
-          {
-            internalType: "string",
-            name: "",
-            type: "string",
-          },
-        ],
-        stateMutability: "view",
-        type: "function",
-      },
-    ],
-    address: CONFIG.base.valley_profile as `0x${string}`,
-    functionName: "getSocialAccountInfo",
-    args: [address!],
-  });
+
+  // const base_rpc_url =
+  //   "https://base-mainnet.g.alchemy.com/v2/yeRMpfqz9mcsk7jRv7N0u9T17DBa7eJb";
+
+  // const retrieveValleyProfile = async () => {
+  //   const valley_data_info = await Valley_Profile.getSocialAccountInfo(
+  //     address!
+  //   );
+  //   console.log("valley_data_info", valley_data_info);
+  //   set_valley_info_data(valley_data_info);
+  // };
+
+  // useEffect(() => {
+  //   if (valley_info_data === "") {
+  //     console.log("called");
+  //     showProfile();
+  //   }
+  // }, [valley_info_data]);
+
+  // useEffect(() => {
+  //   console.log("called");
+  //   retrieveValleyProfile();
+  // }, [address]);
+
+  // const { data: valley_info_data } = useContractRead({
+  //   abi: [
+  //     {
+  //       inputs: [
+  //         {
+  //           internalType: "address",
+  //           name: "",
+  //           type: "address",
+  //         },
+  //       ],
+  //       name: "getSocialAccountInfo",
+  //       outputs: [
+  //         {
+  //           internalType: "string",
+  //           name: "",
+  //           type: "string",
+  //         },
+  //       ],
+  //       stateMutability: "view",
+  //       type: "function",
+  //     },
+  //   ],
+  //   address: CONFIG.base.valley_profile as `0x${string}`,
+  //   functionName: "getSocialAccountInfo",
+  //   args: [address!],
+  // });
 
   // hexagon
   const [vely, setVely] = useState(21);
@@ -98,28 +125,25 @@ export default function Profile({ setGroupId, setCheckChain }: ProfileProps) {
     }
   }, [vely]);
 
-  const showProfile = async () => {
-    const parsedQT = await ShowProfile(valley_info_data as string);
-  };
+  // const showProfile = async () => {
+  //   console.log("showingprofile");
+  //   console.log("valley_info_data", valley_info_data);
+  //   const parsedQT = await ShowProfile(valley_info_data as string);
+  //   console.log(parsedQT);
+  // };
 
-  useEffect(() => {
-    if (valley_info_data) {
-      showProfile();
-    }
-  }, [valley_info_data]);
+  // function getTabURL(callback: any) {
+  //   const queryInfo = {
+  //     active: true,
+  //     currentWindow: true,
+  //   };
 
-  function getTabURL(callback: any) {
-    const queryInfo = {
-      active: true,
-      currentWindow: true,
-    };
-
-    chrome.tabs.query(queryInfo, function (tabs) {
-      let tab = tabs[0];
-      let url = tab.url;
-      callback(url);
-    });
-  }
+  //   chrome.tabs.query(queryInfo, function (tabs) {
+  //     let tab = tabs[0];
+  //     let url = tab.url;
+  //     callback(url);
+  //   });
+  // }
 
   function renderURL(statusText: string) {
     if (statusText.includes("post.tech/messages/group")) {
@@ -137,21 +161,14 @@ export default function Profile({ setGroupId, setCheckChain }: ProfileProps) {
     }
   }
 
+  const retreive_valley_info_data = async () => {
+    const valley_info_data = await ValleyProfile(address as string);
+    console.log(valley_info_data);
+    set_valley_info_data(valley_info_data);
+  };
+
   useEffect(() => {
-    getTabURL(function (url: string) {
-      renderURL(url);
-      if (
-        url.includes("https://post.tech/buy-sell/") ||
-        url.includes("https://www.friend.tech/")
-      ) {
-        navigate("/not-following");
-      } else if (
-        url.includes("https://post.tech/messages/") ||
-        url.includes("https://www.friend.tech/rooms")
-      ) {
-        navigate("/comment");
-      }
-    });
+    retreive_valley_info_data();
   }, []);
 
   return (

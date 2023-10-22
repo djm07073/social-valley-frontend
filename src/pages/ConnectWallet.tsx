@@ -12,8 +12,6 @@ export default function ConnectWallet() {
   const navigate = useNavigate();
   const { address, isConnected } = useAccount();
 
-  const { open } = useWeb3Modal();
-
   const handleConnect = async () => {
     if (chain?.id !== 8453) {
       switchNetwork?.(8453);

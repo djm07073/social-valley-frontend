@@ -26,9 +26,7 @@ const root = ReactDOM.createRoot(
 );
 
 root.render(
-  <React.StrictMode>
-    <WagmiConfig config={wagmiConfig}>
-      <App />
-    </WagmiConfig>
-  </React.StrictMode>
+  <WagmiConfig config={wagmiConfig}>
+    <App />
+  </WagmiConfig>
 );

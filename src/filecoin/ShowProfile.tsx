@@ -3,6 +3,10 @@ import { QueryIPFS } from "./QueryIPFS";
 import { loadSigningKey } from "./loadSigningKey";
 
 export const ShowProfile = async (keyJSONString: string) => {
+  if (keyJSONString === "") {
+    console.log("keyJSONString is empty");
+    return null;
+  }
   const keyJSON = JSON.parse(keyJSONString);
   const bytesUint8Array = new Uint8Array(keyJSON.length);
   for (let j = 0; j < keyJSON.length; j++) {
