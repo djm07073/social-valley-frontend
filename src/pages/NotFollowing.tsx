@@ -13,7 +13,6 @@ interface NotFollowingProps {
   checkChain: string;
 }
 
-
 export default function NotFollowing({
   groupId,
   checkChain,
@@ -53,7 +52,7 @@ export default function NotFollowing({
   const [vely, setVely] = useState(0);
 
   const handleMaskClick = async () => {
-    navigate('/web3bio');
+    navigate("/web3bio");
   };
 
   const handleStorageClick = async () => {
@@ -69,21 +68,24 @@ export default function NotFollowing({
     console.log("Updating Profile...");
 
     setValley_address(valley_address);
-    
+
     // navigate('/web3storage');
   };
 
   const StyledButtonHexagon = css`
+    display: flex;
+    justify-content: center;
+    align-items: center;
     margin-top: 10px;
     width: 236px;
     height: 42px;
     text-align: center;
     padding: 10px 0px;
-    background-color: #338a46;
+    border: 2px solid #338a46;
     font-size: 14px;
-    color: white;
+    color: #338a46;
     cursor: pointer;
-    font-weight: 300;
+    font-weight: 400;
   `;
 
   return (
@@ -118,8 +120,28 @@ export default function NotFollowing({
       <div css={{ fontSize: 12, fontWeight: 300, marginBottom: 2 }}>
         Check this user
       </div>
-      <div onClick={handleStorageClick}css={StyledButtonHexagon}>Web3 storage</div>
-      <div onClick={handleMaskClick} css={StyledButtonHexagon}>Mask network</div>
+      <div onClick={handleStorageClick} css={StyledButtonHexagon}>
+        <img
+          src={process.env.PUBLIC_URL + "/assets/lg_web3_storage.png"}
+          alt="web3 stroage logo"
+          css={{
+            width: "15px",
+            marginRight: "5px",
+          }}
+        />
+        Web3 storage
+      </div>
+      <div onClick={handleMaskClick} css={StyledButtonHexagon}>
+        <img
+          src={process.env.PUBLIC_URL + "/assets/lg_web3_bio.png"}
+          alt="web3 bio logo"
+          css={{
+            width: "15px",
+            marginRight: "5px",
+          }}
+        />
+        Web3 bio
+      </div>
     </div>
   );
 }
