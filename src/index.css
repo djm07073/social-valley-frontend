@@ -26,7 +26,7 @@ html,
   --w3m-accent: #338a46 !important;
   --w3m-border-radius-master: 1px !important;
   --wui-font-size-paragraph: 16px !important;
-  --wui-spacing-l: 74px !important;
+  /* --wui-spacing-l: 74px !important; */
 }
 
 /* -60 <= vely < -20 */
