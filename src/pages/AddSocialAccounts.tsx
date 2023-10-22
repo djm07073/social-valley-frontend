@@ -1,15 +1,11 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAccount, useNetwork, useSwitchNetwork } from "wagmi";
-import { UpdateIndex } from "../filecoin/UpdateIndex";
-import { ethers } from "ethers";
-
 import WalletAddress from "../components/WalletAddress";
 import InputId from "../components/InputId";
 import useConnect from "../hooks/useConnect";
-import { base } from "viem/chains";
 
 type SOCIAL_FI = "MASK" | "FRIEND" | "STAR" | "POST";
 
@@ -17,6 +13,8 @@ export default function AddSocialAccounts() {
   const navigate = useNavigate();
   const { base_addAccount, arbitrum_addAccount } = useConnect();
   const { address } = useAccount();
+  const [isOrigin, setIsOrigin] = useState<boolean>(false);
+  const [origin, setOrigin] = useState<string>("");
   const { chain } = useNetwork();
   const { switchNetwork } = useSwitchNetwork();
   const [groupId, setGroupId] = useState<string>("");
@@ -45,6 +43,12 @@ export default function AddSocialAccounts() {
     //   social_extra_param2
     // );
   };
+  useEffect(() => {
+    if (address && !isOrigin) {
+      setOrigin(address);
+      setIsOrigin(true);
+    }
+  }, [address]);
   const handleConnect = async () => {
     if (socialType === "FRIEND" && chain?.id !== 8453) {
       switchNetwork?.(8453);

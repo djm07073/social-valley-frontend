@@ -9,6 +9,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import { CONFIG } from "../config/chainleader";
 import { ShowProfile } from "../filecoin/ShowProfile";
+import { Contract, JsonRpcApiProvider, JsonRpcProvider } from "ethers";
 
 const selectValley = [
   {
@@ -35,12 +36,36 @@ const socialImg: ISocialImg = {
   starsarena: "/assets/lg_starsarena.png",
   masknetwork: "/assets/lg_masknetwork.png",
 };
-
+const provider = new JsonRpcProvider("https://base.llamarpc.com");
+const profile = new Contract(
+  CONFIG.base.valley_profile,
+  [
+    {
+      inputs: [
+        {
+          internalType: "address",
+          name: "",
+          type: "address",
+        },
+      ],
+      name: "getSocialAccountInfo",
+      outputs: [
+        {
+          internalType: "string",
+          name: "",
+          type: "string",
+        },
+      ],
+      stateMutability: "view",
+      type: "function",
+    },
+  ],
+  provider
+);
 interface ProfileProps {
   setGroupId: (groupId: string) => void;
   setCheckChain: (checkChain: string) => void;
 }
-
 export default function Profile({ setGroupId, setCheckChain }: ProfileProps) {
   const navigate = useNavigate();
   const { address, isConnected } = useAccount();

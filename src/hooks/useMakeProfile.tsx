@@ -8,7 +8,11 @@ export default function useMakeProfile() {
   const { chain } = useNetwork();
   const { switchNetwork } = useSwitchNetwork();
 
-  const { write: makeProfile } = useContractWrite({
+  const {
+    write: makeProfile,
+    isSuccess: isMakeProfile,
+    isLoading,
+  } = useContractWrite({
     address: CONFIG.base.valley_profile as `0x${string}`,
     abi: [
       {
@@ -36,6 +40,8 @@ export default function useMakeProfile() {
 
   return {
     makeProfile,
+    isMakeProfile,
+    isLoading,
     chain,
     switchNetwork,
     setName,
