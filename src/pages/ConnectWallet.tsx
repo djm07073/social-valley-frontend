@@ -35,7 +35,7 @@ export default function ConnectWallet() {
   }, []);
 
   const StyledButtonHexagon = css`
-    width: 236px;
+    width: 245px;
     height: 42px;
     text-align: center;
     padding: 10px 0px;
@@ -93,7 +93,7 @@ export default function ConnectWallet() {
       <div
         css={{
           position: "relative",
-          left: -107,
+          left: -112,
           bottom: 43,
           borderTop: "24px solid white",
           borderRight: "24px solid transparent",
@@ -103,7 +103,7 @@ export default function ConnectWallet() {
       <div
         css={{
           position: "relative",
-          right: -107,
+          right: -112,
           bottom: 67,
           borderTop: "24px solid white",
           borderLeft: "24px solid transparent",
@@ -112,7 +112,7 @@ export default function ConnectWallet() {
       <div
         css={{
           position: "relative",
-          left: -107,
+          left: -112,
           bottom: 69,
           borderBottom: "24px solid white",
           borderRight: "24px solid transparent",
@@ -121,7 +121,7 @@ export default function ConnectWallet() {
       <div
         css={{
           position: "relative",
-          right: -107,
+          right: -112,
           bottom: 93,
           borderBottom: "24px solid white",
           borderLeft: "24px solid transparent",

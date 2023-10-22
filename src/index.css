@@ -17,6 +17,18 @@ html,
   display: none;
 }
 
+:root {
+  --w3m-font-family: "Kanit" !important;
+  --w3m-font-size-master: 10px !important;
+  --wui-font-weight-regular: 400 !important;
+  --wui-font-weight-medium: 400 !important;
+  --wui-font-weight-bold: 400 !important;
+  --w3m-accent: #338a46 !important;
+  --w3m-border-radius-master: 1px !important;
+  --wui-font-size-paragraph: 16px !important;
+  --wui-spacing-l: 74px !important;
+}
+
 /* -60 <= vely < -20 */
 .hexagon {
   position: relative;

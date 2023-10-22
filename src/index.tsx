@@ -1,11 +1,11 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import "./index.css";
 import App from "./App";
 
 import { createWeb3Modal, defaultWagmiConfig } from "@web3modal/wagmi/react";
 import { WagmiConfig, mainnet } from "wagmi";
 import { arbitrum, base, avalanche } from "wagmi/chains";
+import "./index.css";
 
 const projectId = "0525c5b585040cf25b4c5274ba3e4fbf";
 
