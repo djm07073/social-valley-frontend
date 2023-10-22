@@ -32,7 +32,7 @@ function Web3Storage() {
         valley_address: "0xf768a8FD04c16193aCd2F613b8374C1D7e521509",
         good_reputation: 20,
         bad_reputation: 30,
-        comment: ["이 새끼 개별로임", "나의 천사", "좋은 사람"],
+        comment: ["나의 악마", "나의 천사", "좋은 사람"],
         state: [],
     };
 

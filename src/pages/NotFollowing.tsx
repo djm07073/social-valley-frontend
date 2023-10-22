@@ -56,7 +56,7 @@ export default function NotFollowing({
     navigate('/web3bio');
   };
 
-  const handleStorage = async () => {
+  const handleStorageClick = async () => {
     console.log("Updating Profile");
     let checkChainNum: number = 0;
     if (checkChain === "MASK") {
@@ -70,7 +70,7 @@ export default function NotFollowing({
 
     setValley_address(valley_address);
     
-    // navigate('/web3storage');v
+    // navigate('/web3storage');
   };
 
   const StyledButtonHexagon = css`
