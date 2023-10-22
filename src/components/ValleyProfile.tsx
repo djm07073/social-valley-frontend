@@ -31,6 +31,10 @@ export const ValleyProfile = async (address: string) => {
     provider
   );
   const valley_info_data = await Valley_Profile.getSocialAccountInfo(address);
-  console.log("valley_info_data", valley_info_data);
+  if (valley_info_data === "") {
+    console.log("nullVal");
+  } else {
+    console.log("valley_info_data", valley_info_data);
+  }
   return valley_info_data;
 };

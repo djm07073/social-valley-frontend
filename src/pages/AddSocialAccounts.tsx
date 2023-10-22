@@ -6,6 +6,11 @@ import { useAccount, useNetwork, useSwitchNetwork } from "wagmi";
 import WalletAddress from "../components/WalletAddress";
 import InputId from "../components/InputId";
 import useConnect from "../hooks/useConnect";
+import { ShowProfile } from "../filecoin/ShowProfile";
+import { ValleyProfile } from "../components/ValleyProfile";
+import { ValleyIndex } from "../components/ValleyIndex";
+import * as Name from "w3name";
+import { UpdateIndex } from "../filecoin/UpdateIndex";
 
 type SOCIAL_FI = "MASK" | "FRIEND" | "STAR" | "POST";
 
@@ -22,28 +27,38 @@ export default function AddSocialAccounts() {
   const [socialType, setSocialType] = useState<SOCIAL_FI>("MASK");
   const [activeButton, setActiveButton] = useState<boolean>(false);
 
-  const addSocial = async (
+  let parsedQT: any;
+  let name: Name.WritableName;
+
+  const addSocial = async (typeEnum: number) =>
     /** Type(int) mapping
      * 0 = next_id
      * 1 = post_tech
      * 2 = friend_tech
      * 3 = stars_arena
      */
-    type: SOCIAL_FI,
-    social_address: string,
-    social_extra_param1?: string,
-    social_extra_param2?: string
-  ) => {
-    console.log("Updating Index...");
-    // const IPNS1 = await ValleyIndex.getReputation(address!);
-    // await UpdateIndex(
-    //   "",
-    //   type,
-    //   social_address,
-    //   social_extra_param1,
-    //   social_extra_param2
-    // );
+    {
+      console.log("Updating Index...");
+      await UpdateIndex(
+        name,
+        typeEnum,
+        typeEnum == 1 ? nextId : groupId,
+        "",
+        ""
+      );
+    };
+
+  const retreive_valley_info_data = async () => {
+    const valley_info_data = await ValleyProfile(address as string);
+    const res = await ShowProfile(valley_info_data as string);
+    parsedQT = res![0];
+    name = res![1];
   };
+
+  useEffect(() => {
+    retreive_valley_info_data();
+  }, []);
+
   useEffect(() => {
     if (address && !isOrigin) {
       setOrigin(address);
@@ -58,10 +73,10 @@ export default function AddSocialAccounts() {
     }
     if (socialType === "FRIEND" && address) {
       base_addAccount();
-      // addSocial(address); TODO:
+      addSocial(2);
     } else if (socialType === "POST" && address) {
       arbitrum_addAccount();
-      // addSocial(address); TODO:
+      addSocial(1);
     }
   };
 
@@ -207,7 +222,11 @@ export default function AddSocialAccounts() {
           Connect
         </div>
       ) : (
-        <div style={{ backgroundColor: "#DDDDDD" }} css={StyledButton}>
+        <div
+          onClick={handleConnect}
+          style={{ backgroundColor: "#DDDDDD" }}
+          css={StyledButton}
+        >
           Connect
         </div>
       )}
