@@ -2,16 +2,17 @@
 import { css } from "@emotion/react";
 import { useAccount } from "wagmi";
 import { useNavigate } from "react-router-dom";
-import { useWeb3Modal } from "@web3modal/wagmi/react";
 import { IPNSCreateAndUpload } from "../filecoin/IPNSCreateAndUpload";
 import useMakeProfile from "../hooks/useMakeProfile";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { N } from "ethers";
 export default function ConnectWallet() {
-  const { setName, setProfile, makeProfile, chain, switchNetwork } =
+  const [name, setName] = useState<string>("");
+  const [profile, setProfile] = useState<string>("");
+  const { isLoading, makeProfile, chain, switchNetwork, isMakeProfile } =
     useMakeProfile();
   const navigate = useNavigate();
   const { address, isConnected } = useAccount();
-
   const handleConnect = async () => {
     if (chain?.id !== 8453) {
       switchNetwork?.(8453);
@@ -23,8 +24,6 @@ export default function ConnectWallet() {
       setName(nameBytesString);
       setProfile(profileNameBytesString);
     }
-
-    // To Do (BeakerJin): add ipns to smart contract mapping
   };
 
   useEffect(() => {
@@ -32,7 +31,7 @@ export default function ConnectWallet() {
   }, []);
 
   const StyledButtonHexagon = css`
-    width: 236px;
+    width: 245px;
     height: 42px;
     text-align: center;
     padding: 10px 0px;
@@ -60,16 +59,23 @@ export default function ConnectWallet() {
         css={{ marginBottom: 78, marginTop: 100 }}
       />
       {address ? (
-        <div
-          onClick={async () => {
-            handleConnect();
-            makeProfile();
-            if (isConnected) navigate("/profile");
-          }}
-          css={StyledButtonHexagon}
-        >
-          Make Profile
-        </div>
+        isLoading ? (
+          <div> Loading...</div>
+        ) : (
+          <div
+            onClick={async () => {
+              await handleConnect();
+              console.log("transaction");
+              console.log(name);
+              console.log(profile);
+              makeProfile({ args: [name, profile] });
+              if (isConnected && isMakeProfile) navigate("/profile");
+            }}
+            css={StyledButtonHexagon}
+          >
+            Make Profile
+          </div>
+        )
       ) : (
         // <div
         //   onClick={async () => {
@@ -85,7 +91,7 @@ export default function ConnectWallet() {
       <div
         css={{
           position: "relative",
-          left: -107,
+          left: -112,
           bottom: 43,
           borderTop: "24px solid white",
           borderRight: "24px solid transparent",
@@ -95,7 +101,7 @@ export default function ConnectWallet() {
       <div
         css={{
           position: "relative",
-          right: -107,
+          right: -112,
           bottom: 67,
           borderTop: "24px solid white",
           borderLeft: "24px solid transparent",
@@ -104,7 +110,7 @@ export default function ConnectWallet() {
       <div
         css={{
           position: "relative",
-          left: -107,
+          left: -112,
           bottom: 69,
           borderBottom: "24px solid white",
           borderRight: "24px solid transparent",
@@ -113,7 +119,7 @@ export default function ConnectWallet() {
       <div
         css={{
           position: "relative",
-          right: -107,
+          right: -112,
           bottom: 93,
           borderBottom: "24px solid white",
           borderLeft: "24px solid transparent",
